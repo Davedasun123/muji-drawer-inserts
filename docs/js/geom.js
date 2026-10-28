@@ -38,12 +38,14 @@ export const DEFAULTS = {
   tL: 160, tW: 26, tJw: 16, tJl: 55,
   // measured tool rack: length, closed width, jaw width, jaw length (mm)
   rackPart: 1, rackH: 22, rackLip: 8,
+  // challenge drawer: one compartment per tool family, sized to stack
+  stackW: 336, stackD: 224, stackH: 20, stackHalf: 1,
   // open tub - loose tools, at whatever width they spring to
   tubW: 289, tubD: 129, tubH: 18, tubWall: 1.8, tubFloor: 1.2, tubR: 4, tubNotch: 40,
   // parts grid
   gridCols: 8, gridRows: 5, cell: 42, cellWall: 1.6, splits: 2,
   // bed check
-  bedW: 230, bedD: 230,
+  bedW: 256, bedD: 256,
 };
 
 /* ---------------------------------------------------------------- helpers */
@@ -360,6 +362,85 @@ export function buildRack(P) {
     x += pw + P.WALL;
   }
   return booleans.subtract(s, ...cuts);
+}
+
+/* --------------------------------------------------- drawer 2: one layer */
+
+/** One compartment per tool family, sized so a stack of that family fits and
+ *  you still get a finger in. Depth is along Y; the packer lays them out. */
+export const STACK_CELLS = [
+  { n: 'crimper', w: 235, d: 46 },
+  { n: 'cutter', w: 180, d: 52 },
+  { n: 'screwdrivers', w: 145, d: 45 },
+  { n: 'tape measure', w: 62, d: 52 },
+  { n: 'swiss army knife', w: 85, d: 26 },
+  { n: 'long probes', w: 205, d: 24 },
+  { n: 'tweezers x3', w: 130, d: 20 },
+  { n: 'stamped wrenches x6', w: 90, d: 36 },
+  { n: 'drills + hex keys', w: 85, d: 36 },
+  { n: 'flux syringes x2', w: 105, d: 28 },
+  { n: 'small drivers', w: 110, d: 24 },
+];
+
+/** shelf packer; tries a few orderings and keeps the shallowest result */
+export function packCells(cells, W, wall) {
+  const shelf = (order) => {
+    const placed = [];
+    const rows = [];
+    let x = wall; let y = wall; let rowH = 0;
+    for (const c of order) {
+      if (x + c.w + wall > W) {
+        rows.push({ y, h: rowH, to: x - wall });
+        x = wall; y += rowH + wall; rowH = 0;
+      }
+      placed.push({ ...c, x, y });
+      x += c.w + wall;
+      rowH = Math.max(rowH, c.d);
+    }
+    rows.push({ y, h: rowH, to: x - wall });
+    return { placed, rows, D: y + rowH + wall };
+  };
+  const orders = [
+    [...cells].sort((a, b) => b.d - a.d),
+    [...cells].sort((a, b) => b.w - a.w),
+    [...cells].sort((a, b) => b.w * b.d - a.w * a.d),
+    [...cells].sort((a, b) => b.d - a.d || b.w - a.w),
+  ];
+  return orders.map(shelf).reduce((best, r) => (r.D < best.D ? r : best));
+}
+
+/** The tray: walls at the pitch, a floor, and a 45 deg lead-in on every cell
+ *  so a stack of tools slides in instead of snagging. */
+export function buildStack(P) {
+  const W = P.stackW;
+  const H = P.stackH;
+  const { placed, rows, D } = packCells(STACK_CELLS, W, P.WALL);
+  let s = slab(W, D, H, Math.min(rOut(P), 6));
+  const cuts = [];
+  const z0 = P.FLOOR > 0 ? P.FLOOR : -1;
+  for (const c of placed) {
+    cuts.push(pocket(c.w, c.d, -W / 2 + c.x + c.w / 2, -D / 2 + c.y + c.d / 2,
+      z0, H + 1, 4));
+  }
+  // the slack at the end of each row is storage, not a solid block
+  for (const r of rows) {
+    const slack = W - P.WALL - r.to;
+    if (slack > 12) {
+      cuts.push(pocket(slack, r.h, -W / 2 + r.to + P.WALL + slack / 2,
+        -D / 2 + r.y + r.h / 2, z0, H + 1, 4));
+    }
+  }
+  let tray = booleans.subtract(s, ...cuts);
+
+  // 336 mm never fits a 256 mm bed, so cut it at the middle: two printable
+  // halves that butt together in the drawer
+  const half = Math.round(P.stackHalf);
+  if (half >= 1) {
+    const box = primitives.cuboid({ size: [W / 2 + 2, D + 20, H * 4],
+      center: [half === 1 ? -W / 4 - 0.075 : W / 4 + 0.075, 0, H * 2] });
+    tray = booleans.intersect(tray, box);
+  }
+  return tray;
 }
 
 /* -------------------------------------------------------------- open tub */

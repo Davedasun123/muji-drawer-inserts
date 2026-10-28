@@ -44,6 +44,7 @@ need.
 | **A — plier comb** | 152 × 229 × 28 | 5 cradles: 28.4 mm well → shoulder → 18.4 mm jaw channel |
 | **B — drills, tips** | 185 × 229 × 28 | 3 thin slots · open drill-bit tub · 7 solder-tip ribs |
 | **single tool** | tool + 2 × wall | a block wrapped around one measured tool: handle well + narrower jaw channel |
+| **drawer 2 tray** | 2 halves, 169 × 222 × 20 | one compartment per tool family, packed and split for a 256 mm bed |
 | **tool rack** | 137 × 168 × 22 / 163 × 118 × 22 | the five measured tools as plain rectangular pockets, sized for a 256 mm bed |
 | **open tub** | 289 × 129 × 18 | plain box for spring tools kept at full extension, with a finger notch |
 | **fit coupon** | 62 × 52 × 28 | corner of A — print this first, ~10 min |

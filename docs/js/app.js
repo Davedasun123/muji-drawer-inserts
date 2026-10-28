@@ -53,6 +53,11 @@ const GROUPS = {
     ['tJw', 'head/jaw width', 2, 120, 0.5, 'mm'],
     ['tJl', 'head/jaw length', 5, 300, 1, 'mm'],
   ]],
+  stack: ['Drawer 2 — one layer, stacked families', [
+    ['stackW', 'tray width', 100, 336, 1, 'mm'],
+    ['stackH', 'height', 10, 44, 1, 'mm'],
+    ['stackHalf', 'half (1 = left, 2 = right)', 1, 2, 1, ''],
+  ]],
   rack: ['Tool rack', [
     ['rackPart', 'module (1 = pliers, 2 = cutters)', 1, 2, 1, ''],
     ['rackH', 'height', 12, 45, 1, 'mm'],
@@ -114,6 +119,14 @@ const PARTS = [
     build: (p) => G.buildTool(p),
     name: (p) => `tool_${Math.round(p.tL)}x${Math.round(p.tW)}`,
     hint: 'Give the tool\'s overall length and its widest part, then the narrower head and how long that head is. The block is the tool plus one wall all round. Set head/jaw width = max width for a plain rectangular well.',
+  },
+  {
+    id: 'stack',
+    label: 'Drawer 2 — stacked by family',
+    groups: ['stack', 'bodyNoH', 'print'],
+    build: (p) => G.buildStack(p),
+    name: (p) => `drawer2_${Math.round(p.stackHalf) === 1 ? 'left' : 'right'}`,
+    hint: 'One compartment per tool family, sized so a stack of that family fits. The packer lays them out; edit STACK_CELLS in geom.js to move a family.',
   },
   {
     id: 'rack',
