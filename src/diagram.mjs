@@ -1,0 +1,110 @@
+/* Plan-view diagram of a packed tray, as SVG.
+ *   node src/diagram.mjs            -> out/drawer2_plan.svg
+ */
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import * as G from '../docs/js/geom.js';
+
+const P = { ...G.DEFAULTS };
+const root = dirname(dirname(fileURLToPath(import.meta.url)));
+const out = join(root, 'out');
+mkdirSync(out, { recursive: true });
+
+const { placed, rows, D } = G.packCells(G.STACK_CELLS, P.stackW, P.WALL);
+const cells = [...placed].sort((a, b) => (a.y - b.y) || (a.x - b.x));
+
+const S = 2.4;                       // px per mm
+const ML = 84; const MT = 118; const GAP = 108;
+const ROW = 21;
+const planW = P.stackW * S;
+const planH = D * S;
+const legendH = 34 + cells.length * ROW + 30;
+const width = Math.max(planW + ML + 34, 860);
+const height = MT + planH + GAP + legendH;
+
+const px = (mm) => +(mm * S).toFixed(1);
+const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const clip = (t, size, box) => {
+  const max = Math.max(3, Math.floor(box / (size * 0.56)));
+  return t.length <= max ? t : `${t.slice(0, max - 1)}…`;
+};
+function T(x, y, txt, o = {}) {
+  const fam = o.mono ? 'ui-monospace,Menlo,monospace' : 'ui-sans-serif,system-ui,sans-serif';
+  const w = o.weight ? ` font-weight="${o.weight}"` : '';
+  const a = o.anchor ? ` text-anchor="${o.anchor}"` : '';
+  return `<text x="${x}" y="${y}" font-family="${fam}" font-size="${o.size || 13}"${w}${a} fill="${o.fill || '#26303f'}">${esc(txt)}</text>`;
+}
+const parts = [];
+
+// drawer
+const dw = G.DEFAULTS.DW - 1.4;
+const dd = G.DEFAULTS.DD - 1.4;
+const drawX = ML - px((dw - P.stackW) / 2);
+const drawY = MT - px((dd - D) / 2);
+parts.push(`<rect x="${drawX}" y="${drawY}" width="${px(dw)}" height="${px(dd)}" fill="none" stroke="#c3cbd8" stroke-width="2" stroke-dasharray="9 7"/>`);
+parts.push(T(drawX + 8, drawY + 20, `drawer interior ${G.DEFAULTS.DW} × ${G.DEFAULTS.DD}`, { size: 13, fill: '#98a3b3' }));
+
+// tray
+parts.push(`<rect x="${ML}" y="${MT}" width="${planW}" height="${planH}" fill="#f6f8fc" stroke="#2b3546" stroke-width="2.5" rx="4"/>`);
+
+cells.forEach((c, i) => {
+  const x = ML + px(c.x); const y = MT + px(c.y);
+  const w = px(c.w); const h = px(c.d);
+  parts.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>`);
+
+  const wide = w > 90;
+  const numSize = h > 78 ? 26 : 17;
+  const nameSize = h > 78 ? 15 : 12.5;
+
+  if (h > 78) {
+    parts.push(T(x + 10, y + numSize + 6, i + 1, { size: numSize, weight: 700 }));
+    if (wide) {
+      const room = w - 14 - numSize * 1.1 - 6;
+      parts.push(T(x + 10 + numSize * 1.15, y + numSize + 2, clip(c.n.toUpperCase(), nameSize, room), { size: nameSize, fill: '#37445c' }));
+    }
+    parts.push(T(x + 11, y + h - 9, `${c.w} × ${c.d} mm`, { size: 11, mono: true, fill: '#7b8aa0' }));
+    if (!wide) parts.push(T(x + 11, y + numSize + 24, clip(c.n, 11, w - 20), { size: 11, fill: '#37445c' }));
+  } else {
+    parts.push(T(x + 9, y + 20, i + 1, { size: 16, weight: 700 }));
+    parts.push(T(x + 9 + 20, y + 19, clip(c.n, nameSize, w - 34), { size: nameSize, fill: '#37445c' }));
+    parts.push(T(x + 10, y + h - 7, `${c.w}×${c.d}`, { size: 10, mono: true, fill: '#7b8aa0' }));
+  }
+});
+
+for (const r of rows) {
+  const slack = P.stackW - P.WALL - r.to;
+  if (slack > 12) {
+    const x = ML + px(r.to + P.WALL); const y = MT + px(r.y);
+    parts.push(`<rect x="${x}" y="${y}" width="${px(slack)}" height="${px(r.h)}" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>`);
+    parts.push(T(x + 8, y + 19, 'spare', { size: 12, fill: '#97a2b2' }));
+  }
+}
+
+// scale, front marker
+parts.push(`<line x1="${ML}" y1="${MT + planH + 30}" x2="${ML + px(50)}" y2="${MT + planH + 30}" stroke="#2b3546" stroke-width="3"/>`);
+parts.push(T(ML + px(50) + 10, MT + planH + 35, '50 mm', { size: 12, mono: true, fill: '#5a687d' }));
+parts.push(T(width - 34, MT + planH + 35, 'DRAWER FRONT ↓', { size: 14, weight: 700, fill: '#b0453c', anchor: 'end' }));
+
+// legend
+const ly = MT + planH + GAP + 8;
+parts.push(T(ML, ly, 'What goes where', { size: 17, weight: 700 }));
+const col = [ML, ML + 30, ML + 210, ML + 330];
+cells.forEach((c, i) => {
+  const y = ly + 26 + i * ROW;
+  if (i % 2 === 0) parts.push(`<rect x="${ML - 6}" y="${y - 15}" width="${width - ML - 20}" height="${ROW}" fill="#f4f6fa"/>`);
+  parts.push(T(col[0], y, String(i + 1), { size: 13, mono: true, weight: 700 }));
+  parts.push(T(col[1], y, c.n, { size: 13 }));
+  parts.push(T(col[2], y, `${c.w} × ${c.d} mm`, { size: 12, mono: true, fill: '#7b8aa0' }));
+  parts.push(T(col[3], y, c.note || '', { size: 12.5, fill: '#6c7c93' }));
+});
+
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+<rect width="100%" height="100%" fill="#ffffff"/>
+${T(ML, 54, 'Drawer 2 — where each tool goes', { size: 27, weight: 700, fill: '#1b2431' })}
+${T(ML, 82, `${P.stackW} × ${D.toFixed(0)} mm tray · ${P.stackH} mm walls · printed as two halves, ${Math.round(P.stackW / 2)} mm each`, { size: 15, fill: '#6c7c93' })}
+${parts.join('\n')}
+</svg>`;
+
+writeFileSync(join(out, 'drawer2_plan.svg'), svg);
+console.log(`wrote out/drawer2_plan.svg ${width} x ${height}`);

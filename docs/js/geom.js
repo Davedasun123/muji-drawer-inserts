@@ -369,17 +369,17 @@ export function buildRack(P) {
 /** One compartment per tool family, sized so a stack of that family fits and
  *  you still get a finger in. Depth is along Y; the packer lays them out. */
 export const STACK_CELLS = [
-  { n: 'crimper', w: 235, d: 46 },
-  { n: 'cutter', w: 180, d: 52 },
-  { n: 'screwdrivers', w: 145, d: 45 },
-  { n: 'tape measure', w: 62, d: 52 },
-  { n: 'swiss army knife', w: 85, d: 26 },
-  { n: 'long probes', w: 205, d: 24 },
-  { n: 'tweezers x3', w: 130, d: 20 },
-  { n: 'stamped wrenches x6', w: 90, d: 36 },
-  { n: 'drills + hex keys', w: 85, d: 36 },
-  { n: 'flux syringes x2', w: 105, d: 28 },
-  { n: 'small drivers', w: 110, d: 24 },
+  { n: 'Crimper', w: 235, d: 46, note: 'green handle, lies along its length' },
+  { n: 'Side cutter', w: 180, d: 52, note: 'blue handle' },
+  { n: 'Screwdrivers', w: 145, d: 45, note: 'all three, side by side' },
+  { n: 'Tape measure', w: 62, d: 52, note: 'stands on its edge' },
+  { n: 'Swiss army knife', w: 85, d: 26, note: '17 mm thick, alone' },
+  { n: 'Probes', w: 205, d: 24, note: 'both long steel ones, stacked' },
+  { n: 'Tweezers', w: 130, d: 20, note: '3 pairs, stacked' },
+  { n: 'Flat spanners', w: 90, d: 36, note: '6 stamped, stacked' },
+  { n: 'Drills + hex keys', w: 85, d: 36, note: 'drill tube + 2 L-keys' },
+  { n: 'Flux syringes', w: 105, d: 28, note: 'both, stacked' },
+  { n: 'Small drivers', w: 110, d: 24, note: 'the two short ones, stacked' },
 ];
 
 /** shelf packer; tries a few orderings and keeps the shallowest result */
