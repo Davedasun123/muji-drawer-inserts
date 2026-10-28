@@ -368,37 +368,37 @@ export function buildRack(P) {
 
 /** One compartment per tool family, sized so a stack of that family fits and
  *  you still get a finger in. Depth is along Y; the packer lays them out. */
-/** Drawer 2, bottom layer: the things that are thick or long. Measured off
- *  the grid; the trimmed sizes I used before were smaller than the tools. */
+/**
+ * Drawer 2 in ONE layer - every tool off the workbench photo.
+ * Coordinates are a verified packing (84 % of the floor, 216 mm of the 228 mm
+ * depth), not a greedy guess: thin families are stacked inside a single cell,
+ * so nothing needs a second tray. Re-pack with `node src/pack_search.mjs` after
+ * changing any size.
+ */
 export const STACK_D2 = [
-  { n: 'Crimper', w: 248, d: 52, note: 'green, 244 mm long - measured' },
-  { n: 'Side cutter', w: 170, d: 67, note: 'blue, 166 mm - measured' },
-  { n: 'Long screwdrivers', w: 155, d: 80, note: 'two of them, side by side' },
-  { n: 'Tape measure', w: 74, d: 69, note: '70 × 65 - measured' },
-  { n: 'Swiss army knife', w: 105, d: 32, note: '101 × 28 - measured' },
-];
-
-/** Drawer 2, top layer: a 12 mm tray that sits on the bottom layer's rims.
- *  Everything here is under 6 mm thick, so it stacks two or three deep. */
-export const STACK_D2T = [
-  { n: 'Probes', w: 165, d: 30, note: 'both steel ones, stacked' },
-  { n: 'Flat spanners', w: 85, d: 60, note: '6 stamped, stacked tall' },
-  { n: 'Tweezers', w: 130, d: 22, note: '3 pairs, stacked' },
-  { n: 'Drills + hex keys', w: 110, d: 25, note: 'drill tube + 2 L-keys' },
-  { n: 'Small drivers', w: 110, d: 30, note: 'the short ones, stacked' },
-  { n: 'Flux syringes', w: 95, d: 25, note: 'both, stacked' },
+  { n: 'Side cutter', x: 1.6, y: 1.6, w: 170, d: 67, note: 'blue, 166 mm - alone, 15 mm thick' },
+  { n: 'Long screwdrivers', x: 173.6, y: 1.6, w: 155, d: 50, note: 'both, stacked on each other' },
+  { n: 'Small drivers', x: 173.6, y: 53.6, w: 110, d: 30, note: 'the short ones, stacked' },
+  { n: 'Probes', x: 1.6, y: 70.6, w: 165, d: 30, note: 'both steel ones, stacked' },
+  { n: 'Tape measure', x: 251.6, y: 85.6, w: 74, d: 69, note: '70 × 65 - on its edge' },
+  { n: 'Crimper', x: 1.6, y: 102.6, w: 248, d: 52, note: 'green, 244 mm long - alone, 13 mm thick' },
+  { n: 'Tweezers', x: 1.6, y: 156.6, w: 130, d: 22, note: '3 pairs, stacked - 6 mm' },
+  { n: 'Drills + hex keys', x: 133.6, y: 156.6, w: 110, d: 25, note: 'drill tube + 2 L-keys' },
+  { n: 'Flat spanners', x: 245.6, y: 156.6, w: 85, d: 40, note: '6 stamped, stacked - 9 mm total' },
+  { n: 'Swiss army knife', x: 1.6, y: 180.6, w: 105, d: 32, note: '101 × 28 - alone, 17 mm' },
+  { n: 'Flux syringes', x: 108.6, y: 183.6, w: 95, d: 25, note: 'both, stacked' },
 ];
 
 /** Drawer 1: the five pliers off the first photo. The three that spring open
  *  share one open tub at full extension; the two that stay closed get a
- *  rectangular pocket each, turned across the drawer. */
+ *  rectangular pocket each. */
 export const STACK_D1 = [
   { n: 'Spring cutters', w: 289, d: 129, note: 'flush cutter + needle-nose + side cutter, at full extension' },
   { n: 'Combination pliers', w: 165, d: 64, note: 'closed pose, lies across the drawer' },
   { n: 'Wire stripper', w: 165, d: 64, note: 'closed pose, lies across the drawer' },
 ];
 
-export const STACK_SETS = { 1: STACK_D1, 2: STACK_D2, 3: STACK_D2T };
+export const STACK_SETS = { 1: STACK_D1, 2: STACK_D2 };
 
 /** The rectangles left over once the cells are placed, as horizontal bands. */
 export function freeRects(placed, W, D, wall) {
@@ -426,6 +426,10 @@ export function freeRects(placed, W, D, wall) {
  *  both orientations. Shelves waste the ragged end of every row; this fills
  *  the gaps instead, which is most of the difference between 55 % and 85 %. */
 export function packCells(cells, W, wall) {
+  // a layout that already carries coordinates is taken as-is
+  if (cells.every((c) => c.x !== undefined && c.y !== undefined)) {
+    return { placed: cells, D: Math.max(...cells.map((c) => c.y + c.d)) + wall };
+  }
   const inner = W - 2 * wall;
   const pack = (order, allowRotate) => {
     const placed = [];
