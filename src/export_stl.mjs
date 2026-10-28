@@ -17,6 +17,7 @@ const parts = [
   ['fit_coupon', G.buildCoupon(P)],
   ['parts_tray_split', G.buildTray(P).geom],
   ['bin_2x2', G.buildBin(P, 2, 2).geom],
+  ['tub_spring_tools', G.buildTub(P)],
 ];
 
 for (const [name, geom] of parts) {

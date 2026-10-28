@@ -48,6 +48,14 @@ const GROUPS = {
     ['tJw', 'head/jaw width', 2, 120, 0.5, 'mm'],
     ['tJl', 'head/jaw length', 5, 300, 1, 'mm'],
   ]],
+  tub: ['Open tub', [
+    ['tubW', 'length', 30, 400, 1, 'mm'],
+    ['tubD', 'width', 30, 400, 1, 'mm'],
+    ['tubH', 'height', 6, 60, 1, 'mm'],
+    ['tubWall', 'wall', 0.8, 6, 0.1, 'mm'],
+    ['tubFloor', 'floor', 0.6, 6, 0.1, 'mm'],
+    ['tubNotch', 'finger notch', 0, 120, 5, 'mm'],
+  ]],
   grid: ['Parts grid', [
     ['gridCols', 'columns', 1, 14, 1, ''],
     ['gridRows', 'rows', 1, 12, 1, ''],
@@ -96,6 +104,14 @@ const PARTS = [
     build: (p) => G.buildTool(p),
     name: (p) => `tool_${Math.round(p.tL)}x${Math.round(p.tW)}`,
     hint: 'Give the tool\'s overall length and its widest part, then the narrower head and how long that head is. The block is the tool plus one wall all round. Set head/jaw width = max width for a plain rectangular well.',
+  },
+  {
+    id: 'tub',
+    label: 'Open tub — loose tools',
+    groups: ['tub', 'print'],
+    build: (p) => G.buildTub(p),
+    name: (p) => `tub_${Math.round(p.tubW)}x${Math.round(p.tubD)}`,
+    hint: 'A plain box for spring tools you would rather not keep compressed. Size it to the widest pose they spring to, not the closed one.',
   },
   {
     id: 'coupon',

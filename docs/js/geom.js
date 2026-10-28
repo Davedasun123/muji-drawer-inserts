@@ -36,6 +36,8 @@ export const DEFAULTS = {
   tipCount: 7, tipPitch: 14.5, tipLen: 70, tipDepth: 11, tipDia: 9, RIB_H: 10,
   // single tool: a module sized around one tool, not around the drawer
   tL: 160, tW: 26, tJw: 16, tJl: 55,
+  // open tub - loose tools, at whatever width they spring to
+  tubW: 289, tubD: 129, tubH: 18, tubWall: 1.8, tubFloor: 1.2, tubR: 4, tubNotch: 40,
   // parts grid
   gridCols: 8, gridRows: 5, cell: 42, cellWall: 1.6, splits: 2,
   // bed check
@@ -305,6 +307,32 @@ export function buildTool(P) {
 
   const c = scoopInside(-w / 2, w / 2, W / 2, rOut(P), yF, zCut, 12, -1);
   if (c) s = booleans.subtract(s, c);
+  return s;
+}
+
+/* -------------------------------------------------------------- open tub */
+
+/** A plain box for tools you don't want to compress. One wall, one floor,
+ *  one finger notch - the least material that still holds a tool when lifted. */
+export function buildTub(P) {
+  const W = Math.max(20, P.tubW);
+  const D = Math.max(20, P.tubD);
+  const H = Math.max(6, P.tubH);
+  const wall = Math.min(P.tubWall, Math.min(W, D) / 4);
+  const floor = Math.min(P.tubFloor, H / 2);
+  const r = Math.min(P.tubR, W / 2 - 0.1, D / 2 - 0.1, H / 2);
+
+  let s = slab(W, D, H, r);
+  s = booleans.subtract(s, pocket(W - 2 * wall, D - 2 * wall, 0, 0, floor, H + 1,
+    Math.max(0, r - wall)));
+
+  const n = Math.min(P.tubNotch, W - 2 * wall - 4);
+  if (n > 4) {
+    const depth = Math.min(10, wall + 6);
+    const drop = Math.min(9, H * 0.55);
+    s = booleans.subtract(s, cuboid(-n / 2, n / 2, -D / 2 - 1, -D / 2 + wall + depth,
+      H - drop, H + 1));
+  }
   return s;
 }
 
