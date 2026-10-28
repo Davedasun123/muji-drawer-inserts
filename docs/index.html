@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muji drawer inserts — parametric generator</title>
+<meta name="description" content="Generate 3D-printable drawer inserts for a Muji 34 × 23 × 4.5 cm drawer in your browser.">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{
+  "imports": {
+    "@jscad/modeling": "https://cdn.jsdelivr.net/npm/@jscad/modeling@2.12.4/+esm",
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="bar">
+  <div class="brand">
+    <span class="dot"></span>
+    <h1>Drawer insert generator</h1>
+  </div>
+  <p class="sub">Muji 34 × 23 × 4.5 cm — parametric, in your browser</p>
+  <a class="gh" id="repo-link" href="#" target="_blank" rel="noopener">GitHub ↗</a>
+</header>
+
+<main>
+  <aside class="panel">
+    <label class="field">
+      <span class="k">Part</span>
+      <select id="part"></select>
+    </label>
+
+    <div id="controls"></div>
+
+    <div class="actions">
+      <button id="download" class="primary">Download STL</button>
+      <button id="reset" class="ghost">Reset</button>
+    </div>
+    <p class="hint" id="hint"></p>
+  </aside>
+
+  <section class="stage">
+    <canvas id="view"></canvas>
+    <div class="hud" id="hud">building…</div>
+    <div class="legend">drag to orbit · scroll to zoom</div>
+  </section>
+</main>
+
+<div class="err" id="err" hidden></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
