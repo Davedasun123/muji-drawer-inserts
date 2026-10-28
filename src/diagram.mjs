@@ -14,6 +14,23 @@ mkdirSync(out, { recursive: true });
 
 const CELLS = G.STACK_SETS[SET] || G.STACK_D2;
 const NAME = SET === 3 ? 'drawer2 top layer' : `drawer ${SET}`;
+const SHEET = process.argv[3] === 'measure';
+// what the numbers in each cell are based on: measured off the photo, or read
+// by eye from the grid / guessed from the photo's proportions
+const STATUS = {
+  'Side cutter': ['measured', '166 × 63'],
+  'Tape measure': ['measured', '70 × 65'],
+  'Swiss army knife': ['measured', '101 × 28'],
+  Crimper: ['check', '244 × 48'],
+  'Long screwdrivers': ['check', 'two, ~150 × 20 each'],
+  Probes: ['measured', '161 × 11 and 158 × 7'],
+  Tweezers: ['check', '127 × 17'],
+  'Flat spanners': ['measured', '68–79 × 10–18'],
+  'Drills + hex keys': ['check', '105 × 17'],
+  'Small drivers': ['check', '~105 × 12'],
+  'Flux syringes': ['measured', '90 × 20'],
+};
+const MARK = { measured: ['#2f7d4f', '✓'], check: ['#b0453c', '?'] };
 const { placed, D } = G.packCells(CELLS, P.stackW, P.WALL);
 const cells = [...placed].sort((a, b) => (a.y - b.y) || (a.x - b.x));
 
@@ -62,6 +79,20 @@ cells.forEach((c, i) => {
   const numSize = h > 78 ? 26 : 17;
   const nameSize = h > 78 ? 15 : 12.5;
 
+  if (SHEET) {
+    const st = STATUS[c.n] || ['check', ''];
+    const [col, mark] = MARK[st[0]];
+    parts.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#fffdf6" stroke="${col}" stroke-width="2" rx="3"/>`);
+    parts.push(T(x + 9, y + 22, i + 1, { size: 15, weight: 700 }));
+    parts.push(T(x + 30, y + 21, clip(c.n, 13, w - 40), { size: 13, fill: '#37445c' }));
+    parts.push(T(x + w - 10, y + 21, mark, { size: 15, weight: 700, fill: col, anchor: 'end' }));
+    if (w > 110 && h > 34) parts.push(T(x + 10, y + 38, st[1], { size: 11, mono: true, fill: '#8a97a9' }));
+    if (st[0] === 'check' && w > 100 && h > 56) {
+      const my = y + Math.min(h - 12, 62);
+      parts.push(T(x + 10, my, clip('______ × ______ mm', 12, w - 22), { size: 12, fill: '#b0453c' }));
+    }
+    return;
+  }
   if (h > 78) {
     parts.push(T(x + 10, y + numSize + 6, i + 1, { size: numSize, weight: 700 }));
     if (wide) {
@@ -90,9 +121,23 @@ parts.push(T(width - 34, MT + planH + 35, 'DRAWER FRONT ↓', { size: 14, weight
 
 // legend
 const ly = MT + planH + GAP + 8;
-parts.push(T(ML, ly, 'What goes where', { size: 17, weight: 700 }));
+if (SHEET) {
+  const rows2 = [
+    ['✓ measured', 'taken off the 1 cm grid photo, trust it'],
+    ['? check', 'read by eye or guessed - these are the ones I need'],
+  ];
+  rows2.forEach(([a, b], k) => {
+    const y = ly + 26 + k * 22;
+    parts.push(T(ML, y, a, { size: 13.5, weight: 700, fill: k === 0 ? '#2f7d4f' : '#b0453c' }));
+    parts.push(T(ML + 110, y, b, { size: 13, fill: '#556375' }));
+  });
+  parts.push(T(ML, ly + 92, 'Write the numbers straight onto the ? cells, photograph it on the mat,', { size: 13, fill: '#556375' }));
+  parts.push(T(ML, ly + 111, 'and I can size the tray from that. The crimper (6) matters most.', { size: 13, fill: '#556375' }));
+}
+if (!SHEET) parts.push(T(ML, ly, 'What goes where', { size: 17, weight: 700 }));
 const col = [ML, ML + 30, ML + 210, ML + 330];
 cells.forEach((c, i) => {
+  if (SHEET) return;
   const y = ly + 26 + i * ROW;
   if (i % 2 === 0) parts.push(`<rect x="${ML - 6}" y="${y - 15}" width="${width - ML - 20}" height="${ROW}" fill="#f4f6fa"/>`);
   parts.push(T(col[0], y, String(i + 1), { size: 13, mono: true, weight: 700 }));
@@ -103,11 +148,11 @@ cells.forEach((c, i) => {
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
 <rect width="100%" height="100%" fill="#ffffff"/>
-${T(ML, 54, `${NAME[0].toUpperCase()}${NAME.slice(1)} — where each tool goes`, { size: 27, weight: 700, fill: '#1b2431' })}
-${T(ML, 82, `${P.stackW} × ${D.toFixed(0)} mm tray in a ${G.DEFAULTS.DW} × ${G.DEFAULTS.DD} drawer · ${P.stackH} mm walls · two halves, ${Math.round(P.stackW / 2)} mm each`, { size: 15, fill: '#6c7c93' })}
+${T(ML, 54, SHEET ? `${NAME[0].toUpperCase()}${NAME.slice(1)} — measure sheet` : `${NAME[0].toUpperCase()}${NAME.slice(1)} — where each tool goes`, { size: 27, weight: 700, fill: '#1b2431' })}
+${T(ML, 82, SHEET ? `${P.stackW} × ${D.toFixed(0)} mm tray so far · cells marked ? are the numbers I still need` : `${P.stackW} × ${D.toFixed(0)} mm tray in a ${G.DEFAULTS.DW} × ${G.DEFAULTS.DD} drawer · ${P.stackH} mm walls · two halves, ${Math.round(P.stackW / 2)} mm each`, { size: 15, fill: '#6c7c93' })}
 ${parts.join('\n')}
 </svg>`;
 
-const file = SET === 3 ? 'drawer2top_plan.svg' : `drawer${SET}_plan.svg`;
+const file = SHEET ? `drawer${SET}_measure.svg` : (SET === 3 ? 'drawer2top_plan.svg' : `drawer${SET}_plan.svg`);
 writeFileSync(join(out, file), svg);
 console.log(`wrote out/${file} ${width} x ${height}`);
