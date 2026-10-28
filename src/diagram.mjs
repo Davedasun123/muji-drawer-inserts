@@ -13,8 +13,8 @@ const out = join(root, 'out');
 mkdirSync(out, { recursive: true });
 
 const CELLS = G.STACK_SETS[SET] || G.STACK_D2;
-const NAME = SET === 3 ? 'one drawer · bottom tier, 26 mm'
-  : SET === 4 ? 'one drawer · top tier, 18 mm'
+const NAME = SET === 3 ? 'bottom tier, 26 mm'
+  : SET === 4 ? 'top tier, 18 mm'
     : `drawer ${SET}`;
 const SHEET = process.argv[3] === 'measure';
 // what the numbers in each cell are based on: measured off the photo, or read
@@ -64,7 +64,7 @@ const dw = G.DEFAULTS.DW - 1.4;
 const dd = G.DEFAULTS.DD - 1.4;
 const drawX = ML - px((dw - P.stackW) / 2);
 const drawY = MT - px((dd - D) / 2);
-if (dd - D < 70) {
+if (dd - D < 70 && dd - D > 25) {
   parts.push(`<rect x="${drawX}" y="${drawY}" width="${px(dw)}" height="${px(dd)}" fill="none" stroke="#c3cbd8" stroke-width="2" stroke-dasharray="9 7"/>`);
 }
 
