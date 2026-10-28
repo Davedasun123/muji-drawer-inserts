@@ -58,6 +58,24 @@ need.
 - PETG or ASA; PLA is fine for light bits but creeps under a heavy crimper.
 - The pair is ~425 cm³ of model, roughly 150 g printed.
 
+## Traced tools from a photo
+
+For one-offs, photograph the tool on a 1 cm cutting mat and trace it instead of
+guessing numbers:
+
+```bash
+python src/trace_tools.py tools/photo_01.jpg     # -> tools/tools_01.json
+node   src/build_tools.mjs                       # -> out/tools/tool_*.stl
+python src/render_stls.py out/tools/tool_*.stl   # -> preview png
+```
+
+`trace_tools.py` finds the printed grid, fits a homography so 1 unit = 1 cm,
+warps the photo top-down, segments everything that is not mat green, and emits
+one outline per tool (shapely buffer for the pocket + wall, so the outline is
+valid rather than a pixel staircase). `build_tools.mjs` extrudes each into a cup
+with a 1.2 mm floor. Thickness is not visible from above — set it in
+`THICKNESS` in `build_tools.mjs`.
+
 ## Running it locally
 
 ```bash

@@ -386,14 +386,10 @@ export function buildBin(P, cols, rows) {
 
 /* ------------------------------------------------------------- reporting */
 
-/** Triangulate. generalize() snaps coincident vertices together first - without
- *  it the raw CSG output has hundreds of T-junctions along the rounded rims.
- *  A handful of zero-area slits survive (verified: filling them changes the
- *  volume by 0.000 mm3), which every slicer ignores. */
-export function triangles(geom) {
-  const g = modifiers.generalize({ snap: true, triangulate: true }, geom);
+/** Fan-triangulate a polygon list, keeping the original vertex coordinates. */
+function fan(polygons) {
   const out = [];
-  for (const poly of g.polygons) {
+  for (const poly of polygons) {
     const v = poly.vertices;
     for (let i = 1; i + 1 < v.length; i++) {
       out.push([
@@ -404,6 +400,35 @@ export function triangles(geom) {
     }
   }
   return out;
+}
+
+/** Every edge of a closed surface is shared by exactly two triangles.
+ *  Quantise to a micron so that vertices which are merely off by rounding
+ *  still match. */
+function isManifold(tris) {
+  const key = (v) => `${Math.round(v[0] * 1000)},${Math.round(v[1] * 1000)},${Math.round(v[2] * 1000)}`;
+  const seen = new Map();
+  for (const t of tris) {
+    const k = t.map(key);
+    for (let i = 0; i < 3; i++) {
+      const a = k[i]; const b = k[(i + 1) % 3];
+      if (a === b) return false; // degenerate
+      const e = a < b ? `${a}|${b}` : `${b}|${a}`;
+      seen.set(e, (seen.get(e) || 0) + 1);
+    }
+  }
+  for (const n of seen.values()) if (n !== 2) return false;
+  return true;
+}
+
+/** Triangulate. Plain polygons (an extrusion, or a boolean of two) stay
+ *  watertight under a fan; JSCAD's CSG output usually does not, so fall back
+ *  to generalize() - snapping vertices - when the fan leaves the mesh open. */
+export function triangles(geom) {
+  const raw = fan(geom3.toPolygons(geom));
+  if (isManifold(raw)) return raw;
+  const gen = fan(modifiers.generalize({ snap: true, triangulate: true }, geom).polygons);
+  return isManifold(gen) || gen.length ? gen : raw;
 }
 
 export function volume(geom) {
