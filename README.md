@@ -43,6 +43,7 @@ need.
 |---|---|---|
 | **A — plier comb** | 152 × 229 × 28 | 5 cradles: 28.4 mm well → shoulder → 18.4 mm jaw channel |
 | **B — drills, tips** | 185 × 229 × 28 | 3 thin slots · open drill-bit tub · 7 solder-tip ribs |
+| **single tool** | tool + 2 × wall | a block wrapped around one measured tool: handle well + narrower jaw channel |
 | **fit coupon** | 62 × 52 × 28 | corner of A — print this first, ~10 min |
 | **parts tray** | 352 × 212 × 28 | 8 × 5 grid, 42 mm cells, splits into two |
 | **bins** | 1×1 / 2×1 / 2×2 | loose bins — these always keep a floor, or they aren't bins |

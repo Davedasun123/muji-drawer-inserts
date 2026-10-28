@@ -36,6 +36,18 @@ const GROUPS = {
     ['tipLen', 'tip length', 30, 150, 1, 'mm'],
     ['tipDepth', 'tip tray depth', 4, 26, 0.5, 'mm'],
   ]],
+  body: ['Block', [
+    ['MOD_H', 'height', 8, 120, 0.5, 'mm'],
+    ['WALL', 'wall thickness', 0.8, 6, 0.1, 'mm'],
+    ['FLOOR', 'floor (0 = none)', 0, 10, 0.2, 'mm'],
+    ['R_OUT', 'corner radius', 0, 40, 0.5, 'mm'],
+  ]],
+  tool: ['One tool, measured', [
+    ['tL', 'length', 20, 400, 1, 'mm'],
+    ['tW', 'max width', 4, 120, 0.5, 'mm'],
+    ['tJw', 'head/jaw width', 2, 120, 0.5, 'mm'],
+    ['tJl', 'head/jaw length', 5, 300, 1, 'mm'],
+  ]],
   grid: ['Parts grid', [
     ['gridCols', 'columns', 1, 14, 1, ''],
     ['gridRows', 'rows', 1, 12, 1, ''],
@@ -76,6 +88,14 @@ const PARTS = [
     name: () => 'drawer_insert_pair',
     noBed: true,
     hint: 'Both modules in place. 2 mm between them, 0.7 mm to each drawer wall — check nothing collides before printing.',
+  },
+  {
+    id: 'tool',
+    label: 'Single tool — custom pocket',
+    groups: ['tool', 'body', 'print'],
+    build: (p) => G.buildTool(p),
+    name: (p) => `tool_${Math.round(p.tL)}x${Math.round(p.tW)}`,
+    hint: 'Give the tool\'s overall length and its widest part, then the narrower head and how long that head is. The block is the tool plus one wall all round. Set head/jaw width = max width for a plain rectangular well.',
   },
   {
     id: 'coupon',

@@ -34,6 +34,8 @@ export const DEFAULTS = {
   bCount: 3, bPitch: 24, bJawInset: 6, bHandleLen: 70,
   // module B - drill-bit tub + solder tips
   tipCount: 7, tipPitch: 14.5, tipLen: 70, tipDepth: 11, tipDia: 9, RIB_H: 10,
+  // single tool: a module sized around one tool, not around the drawer
+  tL: 160, tW: 26, tJw: 16, tJl: 55,
   // parts grid
   gridCols: 8, gridRows: 5, cell: 42, cellWall: 1.6, splits: 2,
   // bed check
@@ -277,6 +279,34 @@ export function buildAssembly(P) {
     transforms.translate([L.xa, 0, 0], buildA(P)),
     transforms.translate([L.xb, 0, 0], buildB(P)),
   );
+}
+
+/* ------------------------------------------------------ one custom tool */
+
+/** A block wrapped around one tool. Module = tool + one wall all round, so the
+ *  pocket is exactly what you measured; set tJw = tW for a plain rectangular
+ *  well, or a narrower tJw to keep a shoulder that stops the tool sliding. */
+export function buildTool(P) {
+  const w = Math.max(3, P.tW);
+  const l = Math.max(10, P.tL);
+  const jw = Math.max(2, Math.min(P.tJw, w - 0.5));
+  const jl = Math.max(jw * 0.6, Math.min(P.tJl, l - 5));
+  const H = P.MOD_H;
+  const W = w + 2 * P.WALL;
+  const D = l + 2 * P.WALL;
+  const zCut = P.FLOOR > 0 ? P.FLOOR : -1;
+
+  let s = slab(W, D, H, Math.min(rOut(P), W / 2 - 0.1, D / 2 - 0.1));
+  const yF = -D / 2 + P.WALL;
+  const ys = yF + (l - jl);
+  const yB = D / 2 - P.WALL;
+  s = booleans.subtract(s, toolPocket(0, yF, ys, yB, w, jw, zCut, H + 1));
+
+  if (P.FLOOR > 0) {
+    const c = scoopInside(-w / 2, w / 2, W / 2, rOut(P), yF, zCut, 12, -1);
+    if (c) s = booleans.subtract(s, c);
+  }
+  return s;
 }
 
 /* --------------------------------------------------------------- coupon */
