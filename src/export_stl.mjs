@@ -20,8 +20,10 @@ const parts = [
   ['tub_spring_tools', G.buildTub(P)],
   ['rack_1_pliers', G.buildRack({ ...P, rackPart: 1 })],
   ['rack_2_cutters', G.buildRack({ ...P, rackPart: 2 })],
-  ['drawer2_left', G.buildStack({ ...P, stackHalf: 1 })],
-  ['drawer2_right', G.buildStack({ ...P, stackHalf: 2 })],
+  ['drawer1_left', G.buildStack({ ...P, stackSet: 1, stackHalf: 1 })],
+  ['drawer1_right', G.buildStack({ ...P, stackSet: 1, stackHalf: 2 })],
+  ['drawer2_left', G.buildStack({ ...P, stackSet: 2, stackHalf: 1 })],
+  ['drawer2_right', G.buildStack({ ...P, stackSet: 2, stackHalf: 2 })],
 ];
 
 for (const [name, geom] of parts) {

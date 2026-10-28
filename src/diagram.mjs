@@ -11,7 +11,9 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const out = join(root, 'out');
 mkdirSync(out, { recursive: true });
 
-const { placed, rows, D } = G.packCells(G.STACK_CELLS, P.stackW, P.WALL);
+const SET = Number(process.argv[2] || 2);
+const CELLS = G.STACK_SETS[SET] || G.STACK_D2;
+const { placed, rows, D } = G.packCells(CELLS, P.stackW, P.WALL);
 const cells = [...placed].sort((a, b) => (a.y - b.y) || (a.x - b.x));
 
 const S = 2.4;                       // px per mm
@@ -43,7 +45,7 @@ const dd = G.DEFAULTS.DD - 1.4;
 const drawX = ML - px((dw - P.stackW) / 2);
 const drawY = MT - px((dd - D) / 2);
 parts.push(`<rect x="${drawX}" y="${drawY}" width="${px(dw)}" height="${px(dd)}" fill="none" stroke="#c3cbd8" stroke-width="2" stroke-dasharray="9 7"/>`);
-parts.push(T(drawX + 8, drawY + 20, `drawer interior ${G.DEFAULTS.DW} × ${G.DEFAULTS.DD}`, { size: 13, fill: '#98a3b3' }));
+
 
 // tray
 parts.push(`<rect x="${ML}" y="${MT}" width="${planW}" height="${planH}" fill="#f6f8fc" stroke="#2b3546" stroke-width="2.5" rx="4"/>`);
@@ -101,10 +103,11 @@ cells.forEach((c, i) => {
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
 <rect width="100%" height="100%" fill="#ffffff"/>
-${T(ML, 54, 'Drawer 2 — where each tool goes', { size: 27, weight: 700, fill: '#1b2431' })}
-${T(ML, 82, `${P.stackW} × ${D.toFixed(0)} mm tray · ${P.stackH} mm walls · printed as two halves, ${Math.round(P.stackW / 2)} mm each`, { size: 15, fill: '#6c7c93' })}
+${T(ML, 54, `Drawer ${SET} — where each tool goes`, { size: 27, weight: 700, fill: '#1b2431' })}
+${T(ML, 82, `${P.stackW} × ${D.toFixed(0)} mm tray in a ${G.DEFAULTS.DW} × ${G.DEFAULTS.DD} drawer · ${P.stackH} mm walls · two halves, ${Math.round(P.stackW / 2)} mm each`, { size: 15, fill: '#6c7c93' })}
 ${parts.join('\n')}
 </svg>`;
 
-writeFileSync(join(out, 'drawer2_plan.svg'), svg);
-console.log(`wrote out/drawer2_plan.svg ${width} x ${height}`);
+const file = `drawer${SET}_plan.svg`;
+writeFileSync(join(out, file), svg);
+console.log(`wrote out/${file} ${width} x ${height}`);

@@ -56,6 +56,7 @@ const GROUPS = {
   stack: ['Drawer 2 — one layer, stacked families', [
     ['stackW', 'tray width', 100, 336, 1, 'mm'],
     ['stackH', 'height', 10, 44, 1, 'mm'],
+    ['stackSet', 'drawer (1 = pliers, 2 = workbench)', 1, 2, 1, ''],
     ['stackHalf', 'half (1 = left, 2 = right)', 1, 2, 1, ''],
   ]],
   rack: ['Tool rack', [
@@ -122,10 +123,10 @@ const PARTS = [
   },
   {
     id: 'stack',
-    label: 'Drawer 2 — stacked by family',
+    label: 'Drawer tray — by family',
     groups: ['stack', 'bodyNoH', 'print'],
     build: (p) => G.buildStack(p),
-    name: (p) => `drawer2_${Math.round(p.stackHalf) === 1 ? 'left' : 'right'}`,
+    name: (p) => `drawer${Math.round(p.stackSet)}_${Math.round(p.stackHalf) === 1 ? 'left' : 'right'}`,
     hint: 'One compartment per tool family, sized so a stack of that family fits. The packer lays them out; edit STACK_CELLS in geom.js to move a family.',
   },
   {
