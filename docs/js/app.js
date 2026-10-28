@@ -45,6 +45,7 @@ const GROUPS = {
     ['gridRows', 'rows', 1, 12, 1, ''],
     ['cell', 'cell size', 20, 90, 1, 'mm'],
     ['cellWall', 'wall', 1.2, 6, 0.1, 'mm'],
+    ['splits', 'printable halves', 1, 2, 1, ''],
     ['MOD_H', 'height', 8, 120, 0.5, 'mm'],
     ['FLOOR', 'floor', 1, 10, 0.2, 'mm'],
   ]],
@@ -92,9 +93,9 @@ const PARTS = [
     id: 'tray',
     label: 'Parts tray — full grid',
     groups: ['grid', 'print'],
-    build: (p) => G.buildTray(p).geom,
-    name: (p) => `tray_${p.gridCols}x${p.gridRows}`,
-    hint: 'Compartment grid for hardware, bearings or electronic parts. Match columns × cell to your drawer width.',
+    build: (p) => G.buildTray(p),
+    name: (p) => `tray_${p.gridCols}x${p.gridRows}${p.splits > 1 ? `_split${p.splits}` : ''}`,
+    hint: 'Compartment grid for hardware, bearings or electronic parts. With 2 halves it prints on a 220 mm bed and the stepped joint keeps them aligned.',
   },
   {
     id: 'bin1',
@@ -124,6 +125,7 @@ const PARTS = [
 
 let part = PARTS[0];
 let geom = null;
+let extra = null;
 let timer = 0;
 
 /* ------------------------------------------------------------------- three */
@@ -236,7 +238,9 @@ function renderControls() {
 function build() {
   document.getElementById('err').hidden = true;
   try {
-    geom = part.build(P);
+    const res = part.build(P);
+    geom = res && res.geom ? res.geom : res;
+    extra = res && res.pieceSize ? res : null;
   } catch (e) {
     geom = null;
     showError(e);
@@ -270,9 +274,12 @@ function build() {
 
   const vol = G.volume(geom) / 1000;
   const mass = vol * 0.38;
-  const fits = part.noBed || (b.size[0] <= P.bedW && b.size[1] <= P.bedD);
+  const chk = extra && extra.pieceSize ? extra.pieceSize : b.size;
+  const fits = part.noBed || (chk[0] <= P.bedW && chk[1] <= P.bedD);
   const lines = [
-    `${b.size[0].toFixed(1)} × ${b.size[1].toFixed(1)} × ${b.size[2].toFixed(1)} mm`,
+    extra && extra.pieces > 1
+      ? `${extra.pieces} pieces · each ${extra.pieceSize[0].toFixed(1)} × ${extra.pieceSize[1].toFixed(1)} × ${extra.pieceSize[2].toFixed(1)} mm`
+      : `${b.size[0].toFixed(1)} × ${b.size[1].toFixed(1)} × ${b.size[2].toFixed(1)} mm`,
     `${vol.toFixed(0)} cm³ solid · ≈${mass.toFixed(0)} g printed`,
     `${tris.length.toLocaleString()} triangles`,
   ];

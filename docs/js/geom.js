@@ -36,7 +36,7 @@ export const DEFAULTS = {
   bitRows: 2, bitDia: 8, bitPitch: 10.5, bitShelf: 14,
   tipCount: 7, tipPitch: 14.5, tipLen: 70, tipDepth: 11, tipDia: 9,
   // parts grid
-  gridCols: 8, gridRows: 5, cell: 42, cellWall: 2.4,
+  gridCols: 8, gridRows: 5, cell: 42, cellWall: 2.4, splits: 2,
   // bed check
   bedW: 230, bedD: 230,
 };
@@ -264,7 +264,8 @@ export function buildTray(P) {
   const w = P.cellWall;
   const W = P.gridCols * P.cell + w;
   const D = P.gridRows * P.cell + w;
-  let s = slab(W, D, P.MOD_H, P.R_OUT);
+  const H = P.MOD_H;
+  let s = slab(W, D, H, P.R_OUT);
   const cuts = [];
   for (let i = 0; i < P.gridCols; i++) {
     for (let j = 0; j < P.gridRows; j++) {
@@ -275,7 +276,37 @@ export function buildTray(P) {
     }
   }
   const g = booleans.subtract(s, ...cuts);
-  return { geom: g, size: [W, D, P.MOD_H] };
+  const splits = Math.max(1, Math.min(2, Math.round(P.splits || 1)));
+  if (splits === 1) return { geom: g, pieces: 1, size: [W, D, H], pieceSize: [W, D, H] };
+
+  // Split across the width with a stepped lap joint, so the halves cannot slide
+  // apart in the drawer but still print on a 220 mm bed.
+  const step = 3;
+  const gap = 12;
+  const clr = 0.15;
+  const box = (x0, x1, y0, y1) => primitives.cuboid({
+    size: [x1 - x0, y1 - y0, H + 4],
+    center: [(x0 + x1) / 2, (y0 + y1) / 2, (H + 4) / 2 - 2],
+  });
+  const left = booleans.union(
+    booleans.intersect(g, box(-W, 0, -D, 0)),
+    booleans.intersect(g, box(-W, step, 0, D)),
+  );
+  const right = booleans.union(
+    booleans.intersect(g, box(clr, W, -D, 0)),
+    booleans.intersect(g, box(step + clr, W, 0, D)),
+  );
+  const lb = bounds(left);
+  const rb = bounds(right);
+  const placed = booleans.union(left, transforms.translate(
+    [lb.hi[0] + gap - rb.lo[0], 0, 0], right,
+  ));
+  return {
+    geom: placed,
+    pieces: 2,
+    size: [lb.size[0] + gap + rb.size[0], Math.max(lb.size[1], rb.size[1]), H],
+    pieceSize: [Math.max(lb.size[0], rb.size[0]), Math.max(lb.size[1], rb.size[1]), H],
+  };
 }
 
 export function buildBin(P, cols, rows) {
