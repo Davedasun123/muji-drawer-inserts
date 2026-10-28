@@ -294,7 +294,8 @@ export function buildTool(P) {
   const H = P.MOD_H;
   const W = w + 2 * P.WALL;
   const D = l + 2 * P.WALL;
-  const zCut = P.FLOOR > 0 ? P.FLOOR : -1;
+  const floor = Math.max(P.FLOOR, 1.2);
+  const zCut = floor;
 
   let s = slab(W, D, H, Math.min(rOut(P), W / 2 - 0.1, D / 2 - 0.1));
   const yF = -D / 2 + P.WALL;
@@ -302,10 +303,8 @@ export function buildTool(P) {
   const yB = D / 2 - P.WALL;
   s = booleans.subtract(s, toolPocket(0, yF, ys, yB, w, jw, zCut, H + 1));
 
-  if (P.FLOOR > 0) {
-    const c = scoopInside(-w / 2, w / 2, W / 2, rOut(P), yF, zCut, 12, -1);
-    if (c) s = booleans.subtract(s, c);
-  }
+  const c = scoopInside(-w / 2, w / 2, W / 2, rOut(P), yF, zCut, 12, -1);
+  if (c) s = booleans.subtract(s, c);
   return s;
 }
 

@@ -33,7 +33,7 @@ eq('tray volume', cm3(tray.geom), 186.7, 1.5);
 eq('bin volume', cm3(bin.geom), 20.2, 0.5);
 eq('assembly volume', cm3(asm), 425.3, 3);
 
-eq('single tool volume', cm3(tool), 32.5, 1.0);
+eq('single tool volume', cm3(tool), 36.5, 1.0);
 eq('single tool size', box(tool), [29.2, 163.2, 28.0], 0.2);
 eq('A size', box(a), [151.6, 228.6, 28.0], 0.2);
 eq('B size', box(b), [185.0, 228.6, 28.0], 0.2);

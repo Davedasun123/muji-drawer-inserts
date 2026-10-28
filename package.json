@@ -6,9 +6,11 @@
   "scripts": {
     "test": "node test/geom.test.mjs",
     "serve": "python3 -m http.server 8080 --directory docs",
-    "export": "node src/export_stl.mjs"
+    "export": "node src/export_stl.mjs",
+    "smoke": "node test/ui.smoke.mjs"
   },
   "devDependencies": {
-    "@jscad/modeling": "2.12.4"
+    "@jscad/modeling": "2.12.4",
+    "puppeteer-core": "^25.16.0"
   }
 }
