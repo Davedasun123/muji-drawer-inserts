@@ -1,39 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="924.4" height="827.7199999999999" viewBox="0 0 924.4 827.7199999999999">
+<svg xmlns="http://www.w3.org/2000/svg" width="924.4" height="832.52" viewBox="0 0 924.4 832.52">
 <rect width="100%" height="100%" fill="#ffffff"/>
 <text x="84" y="54" font-family="ui-sans-serif,system-ui,sans-serif" font-size="27" font-weight="700" fill="#1b2431">Drawer 1 — where each tool goes</text>
-<text x="84" y="82" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#6c7c93">336 × 198 mm tray in a 340 × 230 drawer · 20 mm walls · two halves, 168 mm each</text>
-<rect x="80.9" y="81" width="812.6" height="548.6" fill="none" stroke="#c3cbd8" stroke-width="2" stroke-dasharray="9 7"/>
-<rect x="84" y="118" width="806.4" height="474.7199999999999" fill="#f6f8fc" stroke="#2b3546" stroke-width="2.5" rx="4"/>
+<text x="84" y="82" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#6c7c93">336 × 200 mm tray in a 340 × 230 drawer · 20 mm walls · two halves, 168 mm each</text>
+<rect x="80.9" y="83.4" width="812.6" height="548.6" fill="none" stroke="#c3cbd8" stroke-width="2" stroke-dasharray="9 7"/>
+<rect x="84" y="118" width="806.4" height="479.5199999999999" fill="#f6f8fc" stroke="#2b3546" stroke-width="2.5" rx="4"/>
 <rect x="87.8" y="121.8" width="693.6" height="309.6" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
 <text x="97.8" y="153.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">1</text>
 <text x="127.69999999999999" y="149.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">SPRING CUTTERS</text>
 <text x="98.8" y="422.40000000000003" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">289 × 129 mm</text>
-<rect x="87.8" y="435.3" width="396" height="153.6" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
-<text x="97.8" y="467.3" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">2</text>
-<text x="127.69999999999999" y="463.3" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">COMBINATION PLIERS</text>
-<text x="98.8" y="579.9" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">165 × 64 mm</text>
-<rect x="487.7" y="435.3" width="396" height="153.6" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
-<text x="497.7" y="467.3" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">3</text>
-<text x="527.6" y="463.3" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">WIRE STRIPPER</text>
-<text x="498.7" y="579.9" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">165 × 64 mm</text>
-<rect x="785.3" y="121.8" width="105.1" height="309.6" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
-<text x="793.3" y="140.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
-<line x1="84" y1="622.7199999999999" x2="204" y2="622.7199999999999" stroke="#2b3546" stroke-width="3"/>
-<text x="214" y="627.7199999999999" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#5a687d">50 mm</text>
-<text x="890.4" y="627.7199999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="end" fill="#b0453c">DRAWER FRONT ↓</text>
-<text x="84" y="708.7199999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="17" font-weight="700" fill="#26303f">What goes where</text>
-<rect x="78" y="719.7199999999999" width="820.4" height="21" fill="#f4f6fa"/>
-<text x="84" y="734.7199999999999" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">1</text>
-<text x="114" y="734.7199999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Spring cutters</text>
-<text x="294" y="734.7199999999999" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">289 × 129 mm</text>
-<text x="414" y="734.7199999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">flush cutter + needle-nose + side cutter, at full extension</text>
-<text x="84" y="755.7199999999999" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">2</text>
-<text x="114" y="755.7199999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Combination pliers</text>
-<text x="294" y="755.7199999999999" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">165 × 64 mm</text>
-<text x="414" y="755.7199999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">closed pose, lies across the drawer</text>
-<rect x="78" y="761.7199999999999" width="820.4" height="21" fill="#f4f6fa"/>
-<text x="84" y="776.7199999999999" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">3</text>
-<text x="114" y="776.7199999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Wire stripper</text>
-<text x="294" y="776.7199999999999" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">165 × 64 mm</text>
-<text x="414" y="776.7199999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">closed pose, lies across the drawer</text>
+<rect x="87.8" y="436.2" width="396" height="153.6" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="97.8" y="468.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">2</text>
+<text x="127.69999999999999" y="464.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">COMBINATION PLIERS</text>
+<text x="98.8" y="580.8" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">165 × 64 mm</text>
+<rect x="488.6" y="436.2" width="396" height="153.6" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="498.6" y="468.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">3</text>
+<text x="528.5" y="464.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">WIRE STRIPPER</text>
+<text x="499.6" y="580.8" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">165 × 64 mm</text>
+<rect x="785.3" y="121.8" width="101.3" height="313.4" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="792.3" y="139.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<line x1="84" y1="627.52" x2="204" y2="627.52" stroke="#2b3546" stroke-width="3"/>
+<text x="214" y="632.52" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#5a687d">50 mm</text>
+<text x="890.4" y="632.52" font-family="ui-sans-serif,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="end" fill="#b0453c">DRAWER FRONT ↓</text>
+<text x="84" y="713.52" font-family="ui-sans-serif,system-ui,sans-serif" font-size="17" font-weight="700" fill="#26303f">What goes where</text>
+<rect x="78" y="724.52" width="820.4" height="21" fill="#f4f6fa"/>
+<text x="84" y="739.52" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">1</text>
+<text x="114" y="739.52" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Spring cutters</text>
+<text x="294" y="739.52" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">289 × 129 mm</text>
+<text x="414" y="739.52" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">flush cutter + needle-nose + side cutter, at full extension</text>
+<text x="84" y="760.52" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">2</text>
+<text x="114" y="760.52" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Combination pliers</text>
+<text x="294" y="760.52" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">165 × 64 mm</text>
+<text x="414" y="760.52" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">closed pose, lies across the drawer</text>
+<rect x="78" y="766.52" width="820.4" height="21" fill="#f4f6fa"/>
+<text x="84" y="781.52" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">3</text>
+<text x="114" y="781.52" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Wire stripper</text>
+<text x="294" y="781.52" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">165 × 64 mm</text>
+<text x="414" y="781.52" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">closed pose, lies across the drawer</text>
 </svg>

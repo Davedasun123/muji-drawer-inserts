@@ -56,7 +56,7 @@ const GROUPS = {
   stack: ['Drawer 2 — one layer, stacked families', [
     ['stackW', 'tray width', 100, 336, 1, 'mm'],
     ['stackH', 'height', 10, 44, 1, 'mm'],
-    ['stackSet', 'drawer (1 = pliers, 2 = workbench)', 1, 2, 1, ''],
+    ['stackSet', 'set (1 = drawer 1, 2 = drawer 2 base, 3 = drawer 2 top)', 1, 3, 1, ''],
     ['stackHalf', 'half (1 = left, 2 = right)', 1, 2, 1, ''],
   ]],
   rack: ['Tool rack', [

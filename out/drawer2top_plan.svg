@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="924.4" height="633.92" viewBox="0 0 924.4 633.92">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="84" y="54" font-family="ui-sans-serif,system-ui,sans-serif" font-size="27" font-weight="700" fill="#1b2431">Drawer2 top layer — where each tool goes</text>
+<text x="84" y="82" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#6c7c93">336 × 91 mm tray in a 340 × 230 drawer · 12 mm walls · two halves, 168 mm each</text>
+<rect x="84" y="118" width="806.4" height="217.91999999999996" fill="#f6f8fc" stroke="#2b3546" stroke-width="2.5" rx="4"/>
+<rect x="87.8" y="121.8" width="204" height="144" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="97.8" y="153.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">1</text>
+<text x="127.69999999999999" y="149.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">FLAT SPANNERS</text>
+<text x="98.8" y="256.8" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">85 × 60 mm</text>
+<rect x="296.6" y="121.8" width="396" height="72" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="305.6" y="141.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="700" fill="#26303f">2</text>
+<text x="325.6" y="140.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#37445c">Probes</text>
+<text x="306.6" y="186.8" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#7b8aa0">165×30</text>
+<rect x="296.6" y="198.6" width="264" height="72" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="305.6" y="218.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="700" fill="#26303f">3</text>
+<text x="325.6" y="217.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#37445c">Small drivers</text>
+<text x="306.6" y="263.6" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#7b8aa0">110×30</text>
+<rect x="565.4" y="198.6" width="264" height="60" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="574.4" y="218.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="700" fill="#26303f">4</text>
+<text x="594.4" y="217.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#37445c">Drills + hex keys</text>
+<text x="575.4" y="251.60000000000002" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#7b8aa0">110×25</text>
+<rect x="565.4" y="263.4" width="228" height="60" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="574.4" y="283.4" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="700" fill="#26303f">5</text>
+<text x="594.4" y="282.4" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#37445c">Flux syringes</text>
+<text x="575.4" y="316.4" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#7b8aa0">95×25</text>
+<rect x="87.8" y="275.4" width="312" height="52.8" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="96.8" y="295.4" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="700" fill="#26303f">6</text>
+<text x="116.8" y="294.4" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#37445c">Tweezers</text>
+<text x="97.8" y="321.2" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#7b8aa0">130×22</text>
+<rect x="696.5" y="121.8" width="190.1" height="75.8" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="703.5" y="139.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<rect x="833.3" y="198.6" width="53.3" height="63.8" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<rect x="403.7" y="275.4" width="161.8" height="51.8" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="410.7" y="293.4" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<rect x="797.3" y="275.4" width="89.3" height="51.8" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="804.3" y="293.4" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<line x1="84" y1="365.91999999999996" x2="204" y2="365.91999999999996" stroke="#2b3546" stroke-width="3"/>
+<text x="214" y="370.91999999999996" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#5a687d">50 mm</text>
+<text x="890.4" y="370.91999999999996" font-family="ui-sans-serif,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="end" fill="#b0453c">DRAWER FRONT ↓</text>
+<text x="84" y="451.91999999999996" font-family="ui-sans-serif,system-ui,sans-serif" font-size="17" font-weight="700" fill="#26303f">What goes where</text>
+<rect x="78" y="462.91999999999996" width="820.4" height="21" fill="#f4f6fa"/>
+<text x="84" y="477.91999999999996" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">1</text>
+<text x="114" y="477.91999999999996" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Flat spanners</text>
+<text x="294" y="477.91999999999996" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">85 × 60 mm</text>
+<text x="414" y="477.91999999999996" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">6 stamped, stacked tall</text>
+<text x="84" y="498.91999999999996" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">2</text>
+<text x="114" y="498.91999999999996" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Probes</text>
+<text x="294" y="498.91999999999996" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">165 × 30 mm</text>
+<text x="414" y="498.91999999999996" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">both steel ones, stacked</text>
+<rect x="78" y="504.91999999999996" width="820.4" height="21" fill="#f4f6fa"/>
+<text x="84" y="519.92" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">3</text>
+<text x="114" y="519.92" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Small drivers</text>
+<text x="294" y="519.92" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">110 × 30 mm</text>
+<text x="414" y="519.92" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">the short ones, stacked</text>
+<text x="84" y="540.92" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">4</text>
+<text x="114" y="540.92" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Drills + hex keys</text>
+<text x="294" y="540.92" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">110 × 25 mm</text>
+<text x="414" y="540.92" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">drill tube + 2 L-keys</text>
+<rect x="78" y="546.92" width="820.4" height="21" fill="#f4f6fa"/>
+<text x="84" y="561.92" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">5</text>
+<text x="114" y="561.92" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Flux syringes</text>
+<text x="294" y="561.92" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">95 × 25 mm</text>
+<text x="414" y="561.92" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">both, stacked</text>
+<text x="84" y="582.92" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">6</text>
+<text x="114" y="582.92" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Tweezers</text>
+<text x="294" y="582.92" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">130 × 22 mm</text>
+<text x="414" y="582.92" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">3 pairs, stacked</text>
+</svg>

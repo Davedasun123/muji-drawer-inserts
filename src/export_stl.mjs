@@ -24,6 +24,8 @@ const parts = [
   ['drawer1_right', G.buildStack({ ...P, stackSet: 1, stackHalf: 2 })],
   ['drawer2_left', G.buildStack({ ...P, stackSet: 2, stackHalf: 1 })],
   ['drawer2_right', G.buildStack({ ...P, stackSet: 2, stackHalf: 2 })],
+  ['drawer2_top_left', G.buildStack({ ...P, stackSet: 3, stackH: 12, stackHalf: 1 })],
+  ['drawer2_top_right', G.buildStack({ ...P, stackSet: 3, stackH: 12, stackHalf: 2 })],
 ];
 
 for (const [name, geom] of parts) {

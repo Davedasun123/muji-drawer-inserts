@@ -6,14 +6,15 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as G from '../docs/js/geom.js';
 
-const P = { ...G.DEFAULTS };
+const SET = Number(process.argv[2] || 2);
+const P = { ...G.DEFAULTS, stackH: SET === 3 ? 12 : G.DEFAULTS.stackH };
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const out = join(root, 'out');
 mkdirSync(out, { recursive: true });
 
-const SET = Number(process.argv[2] || 2);
 const CELLS = G.STACK_SETS[SET] || G.STACK_D2;
-const { placed, rows, D } = G.packCells(CELLS, P.stackW, P.WALL);
+const NAME = SET === 3 ? 'drawer2 top layer' : `drawer ${SET}`;
+const { placed, D } = G.packCells(CELLS, P.stackW, P.WALL);
 const cells = [...placed].sort((a, b) => (a.y - b.y) || (a.x - b.x));
 
 const S = 2.4;                       // px per mm
@@ -44,7 +45,9 @@ const dw = G.DEFAULTS.DW - 1.4;
 const dd = G.DEFAULTS.DD - 1.4;
 const drawX = ML - px((dw - P.stackW) / 2);
 const drawY = MT - px((dd - D) / 2);
-parts.push(`<rect x="${drawX}" y="${drawY}" width="${px(dw)}" height="${px(dd)}" fill="none" stroke="#c3cbd8" stroke-width="2" stroke-dasharray="9 7"/>`);
+if (dd - D < 70) {
+  parts.push(`<rect x="${drawX}" y="${drawY}" width="${px(dw)}" height="${px(dd)}" fill="none" stroke="#c3cbd8" stroke-width="2" stroke-dasharray="9 7"/>`);
+}
 
 
 // tray
@@ -74,13 +77,10 @@ cells.forEach((c, i) => {
   }
 });
 
-for (const r of rows) {
-  const slack = P.stackW - P.WALL - r.to;
-  if (slack > 12) {
-    const x = ML + px(r.to + P.WALL); const y = MT + px(r.y);
-    parts.push(`<rect x="${x}" y="${y}" width="${px(slack)}" height="${px(r.h)}" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>`);
-    parts.push(T(x + 8, y + 19, 'spare', { size: 12, fill: '#97a2b2' }));
-  }
+for (const r of G.freeRects(placed, P.stackW, D, P.WALL)) {
+  const x = ML + px(r.x); const y = MT + px(r.y);
+  parts.push(`<rect x="${x}" y="${y}" width="${px(r.w)}" height="${px(r.d)}" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>`);
+  if (r.w > 30 && r.d > 12) parts.push(T(x + 7, y + 18, 'spare', { size: 12, fill: '#97a2b2' }));
 }
 
 // scale, front marker
@@ -103,11 +103,11 @@ cells.forEach((c, i) => {
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
 <rect width="100%" height="100%" fill="#ffffff"/>
-${T(ML, 54, `Drawer ${SET} — where each tool goes`, { size: 27, weight: 700, fill: '#1b2431' })}
+${T(ML, 54, `${NAME[0].toUpperCase()}${NAME.slice(1)} — where each tool goes`, { size: 27, weight: 700, fill: '#1b2431' })}
 ${T(ML, 82, `${P.stackW} × ${D.toFixed(0)} mm tray in a ${G.DEFAULTS.DW} × ${G.DEFAULTS.DD} drawer · ${P.stackH} mm walls · two halves, ${Math.round(P.stackW / 2)} mm each`, { size: 15, fill: '#6c7c93' })}
 ${parts.join('\n')}
 </svg>`;
 
-const file = `drawer${SET}_plan.svg`;
+const file = SET === 3 ? 'drawer2top_plan.svg' : `drawer${SET}_plan.svg`;
 writeFileSync(join(out, file), svg);
 console.log(`wrote out/${file} ${width} x ${height}`);

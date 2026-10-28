@@ -368,60 +368,100 @@ export function buildRack(P) {
 
 /** One compartment per tool family, sized so a stack of that family fits and
  *  you still get a finger in. Depth is along Y; the packer lays them out. */
+/** Drawer 2, bottom layer: the things that are thick or long. Measured off
+ *  the grid; the trimmed sizes I used before were smaller than the tools. */
 export const STACK_D2 = [
-  { n: 'Crimper', w: 235, d: 46, note: 'green handle, lies along its length' },
-  { n: 'Side cutter', w: 180, d: 52, note: 'blue handle' },
-  { n: 'Screwdrivers', w: 145, d: 45, note: 'all three, side by side' },
-  { n: 'Tape measure', w: 62, d: 52, note: 'stands on its edge' },
-  { n: 'Swiss army knife', w: 85, d: 26, note: '17 mm thick, alone' },
-  { n: 'Probes', w: 205, d: 24, note: 'both long steel ones, stacked' },
-  { n: 'Tweezers', w: 130, d: 20, note: '3 pairs, stacked' },
-  { n: 'Flat spanners', w: 90, d: 36, note: '6 stamped, stacked' },
-  { n: 'Drills + hex keys', w: 85, d: 36, note: 'drill tube + 2 L-keys' },
-  { n: 'Flux syringes', w: 105, d: 28, note: 'both, stacked' },
-  { n: 'Small drivers', w: 110, d: 24, note: 'the two short ones, stacked' },
+  { n: 'Crimper', w: 248, d: 52, note: 'green, 244 mm long - measured' },
+  { n: 'Side cutter', w: 170, d: 67, note: 'blue, 166 mm - measured' },
+  { n: 'Long screwdrivers', w: 155, d: 80, note: 'two of them, side by side' },
+  { n: 'Tape measure', w: 74, d: 69, note: '70 × 65 - measured' },
+  { n: 'Swiss army knife', w: 105, d: 32, note: '101 × 28 - measured' },
+];
+
+/** Drawer 2, top layer: a 12 mm tray that sits on the bottom layer's rims.
+ *  Everything here is under 6 mm thick, so it stacks two or three deep. */
+export const STACK_D2T = [
+  { n: 'Probes', w: 165, d: 30, note: 'both steel ones, stacked' },
+  { n: 'Flat spanners', w: 85, d: 60, note: '6 stamped, stacked tall' },
+  { n: 'Tweezers', w: 130, d: 22, note: '3 pairs, stacked' },
+  { n: 'Drills + hex keys', w: 110, d: 25, note: 'drill tube + 2 L-keys' },
+  { n: 'Small drivers', w: 110, d: 30, note: 'the short ones, stacked' },
+  { n: 'Flux syringes', w: 95, d: 25, note: 'both, stacked' },
 ];
 
 /** Drawer 1: the five pliers off the first photo. The three that spring open
- *  get one open tub at full extension - no pocket squeezing them - and the two
- *  that stay closed get a rectangular pocket each, turned across the drawer. */
+ *  share one open tub at full extension; the two that stay closed get a
+ *  rectangular pocket each, turned across the drawer. */
 export const STACK_D1 = [
   { n: 'Spring cutters', w: 289, d: 129, note: 'flush cutter + needle-nose + side cutter, at full extension' },
   { n: 'Combination pliers', w: 165, d: 64, note: 'closed pose, lies across the drawer' },
   { n: 'Wire stripper', w: 165, d: 64, note: 'closed pose, lies across the drawer' },
 ];
 
-export const STACK_SETS = { 1: STACK_D1, 2: STACK_D2 };
+export const STACK_SETS = { 1: STACK_D1, 2: STACK_D2, 3: STACK_D2T };
 
-/** shelf packer; tries a few orderings and keeps the shallowest result */
-export function packCells(cells, W, wall) {
-  const shelf = (order) => {
-    const placed = [];
-    const rows = [];
-    let x = wall; let y = wall; let rowH = 0;
-    for (const c of order) {
-      if (x + c.w + wall > W) {
-        rows.push({ y, h: rowH, to: x - wall });
-        x = wall; y += rowH + wall; rowH = 0;
-      }
-      placed.push({ ...c, x, y });
-      x += c.w + wall;
-      rowH = Math.max(rowH, c.d);
+/** The rectangles left over once the cells are placed, as horizontal bands. */
+export function freeRects(placed, W, D, wall) {
+  const ys = [...new Set([wall, D - wall,
+    ...placed.map((c) => c.y), ...placed.map((c) => c.y + c.d + wall)])]
+    .filter((y) => y >= wall && y <= D - wall).sort((a, b) => a - b);
+  const out = [];
+  for (let i = 0; i + 1 < ys.length; i++) {
+    const y0 = ys[i]; const y1 = ys[i + 1];
+    if (y1 - y0 < 8) continue;
+    let x = wall;
+    const spans = placed
+      .filter((c) => c.y < y1 && y0 < c.y + c.d)
+      .map((c) => [c.x, c.x + c.w + wall]).sort((a, b) => a[0] - b[0]);
+    for (const [a, b] of spans) {
+      if (a - x > 12) out.push({ x, y: y0, w: a - x, d: y1 - y0 });
+      x = Math.max(x, b);
     }
-    rows.push({ y, h: rowH, to: x - wall });
-    return { placed, rows, D: y + rowH + wall };
-  };
-  const orders = [
-    [...cells].sort((a, b) => b.d - a.d),
-    [...cells].sort((a, b) => b.w - a.w),
-    [...cells].sort((a, b) => b.w * b.d - a.w * a.d),
-    [...cells].sort((a, b) => b.d - a.d || b.w - a.w),
-  ];
-  return orders.map(shelf).reduce((best, r) => (r.D < best.D ? r : best));
+    if (W - wall - x > 12) out.push({ x, y: y0, w: W - wall - x, d: y1 - y0 });
+  }
+  return out;
 }
 
-/** The tray: walls at the pitch, a floor, and a 45 deg lead-in on every cell
- *  so a stack of tools slides in instead of snagging. */
+/** Bottom-left packer: drop each cell at the lowest position it fits, trying
+ *  both orientations. Shelves waste the ragged end of every row; this fills
+ *  the gaps instead, which is most of the difference between 55 % and 85 %. */
+export function packCells(cells, W, wall) {
+  const inner = W - 2 * wall;
+  const pack = (order, allowRotate) => {
+    const placed = [];
+    const hits = (x, y, w, d) => placed.some((p) => x < p.x + p.w + wall
+      && p.x < x + w + wall && y < p.y + p.d + wall && p.y < y + d + wall);
+    let bottom = 0;
+    for (const c of order) {
+      let best = null;
+      const tries = allowRotate ? [[c.w, c.d, 0], [c.d, c.w, 90]] : [[c.w, c.d, 0]];
+      for (const [w, d, rot] of tries) {
+        if (w > inner) continue;
+        for (let y = wall; y <= bottom + wall && !best; y++) {
+          for (let x = wall; x + w <= W - wall; x++) {
+            if (!hits(x, y, w, d)) { best = { ...c, x, y, w, d, rot }; break; }
+          }
+        }
+        if (best) break;
+      }
+      if (!best) {                       // nothing fits inside the width
+        best = { ...c, x: wall, y: bottom, w: c.w, d: c.d, rot: 0 };
+      }
+      placed.push(best);
+      bottom = Math.max(bottom, best.y + best.d + wall);
+    }
+    return { placed, rows: [], D: bottom + wall };
+  };
+  const orders = [
+    [...cells].sort((a, b) => b.w * b.d - a.w * a.d),
+    [...cells].sort((a, b) => b.d - a.d),
+    [...cells].sort((a, b) => b.w - a.w),
+  ];
+  const runs = [];
+  for (const o of orders) for (const rot of [false, true]) runs.push(pack(o, rot));
+  return runs.reduce((best, r) => (r.D < best.D ? r : best));
+}
+
 export function buildStack(P) {
   const W = P.stackW;
   const H = P.stackH;
@@ -434,13 +474,10 @@ export function buildStack(P) {
     cuts.push(pocket(c.w, c.d, -W / 2 + c.x + c.w / 2, -D / 2 + c.y + c.d / 2,
       z0, H + 1, 4));
   }
-  // the slack at the end of each row is storage, not a solid block
-  for (const r of rows) {
-    const slack = W - P.WALL - r.to;
-    if (slack > 12) {
-      cuts.push(pocket(slack, r.h, -W / 2 + r.to + P.WALL + slack / 2,
-        -D / 2 + r.y + r.h / 2, z0, H + 1, 4));
-    }
+  // anything the packer could not fill is storage, not a solid block
+  for (const r of freeRects(placed, W, D, P.WALL)) {
+    cuts.push(pocket(r.w, r.d, -W / 2 + r.x + r.w / 2, -D / 2 + r.y + r.d / 2,
+      z0, H + 1, 3));
   }
   let tray = booleans.subtract(s, ...cuts);
 
