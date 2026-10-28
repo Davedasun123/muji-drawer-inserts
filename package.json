@@ -5,7 +5,8 @@
   "description": "Parametric 3D-printable inserts for a 340x230x45 mm Muji drawer",
   "scripts": {
     "test": "node test/geom.test.mjs",
-    "serve": "python3 -m http.server 8080 --directory docs"
+    "serve": "python3 -m http.server 8080 --directory docs",
+    "export": "node src/export_stl.mjs"
   },
   "devDependencies": {
     "@jscad/modeling": "2.12.4"

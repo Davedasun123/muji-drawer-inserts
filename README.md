@@ -1,8 +1,8 @@
 # Muji drawer inserts
 
 Parametric, 3D-printable drawer organiser for a **Muji 340 × 230 × 45 mm** drawer
-(34 × 23 × 4.5 cm inside). Two parts for hand tools plus a compartment grid for
-hardware and electronic parts.
+(34 × 23 × 4.5 cm inside). Tuned for minimum material: **1.6 mm walls, no floor
+by default, nothing doing structural work it doesn't have to.**
 
 **Generator site:** <https://davedasun123.github.io/muji-drawer-inserts/>
 — change any dimension, watch it rebuild, download the STL. Everything runs in
@@ -14,35 +14,55 @@ docs/                 the site (GitHub Pages serves this folder)
   js/geom.js          all the geometry, one pure function per part
   js/app.js           UI, three.js preview, STL writer
   css/style.css
-src/model.py          the original CadQuery model (reference implementation)
-out/                  STLs + STEP exported from CadQuery
-test/geom.test.mjs    checks the browser geometry against the CadQuery volumes
+src/export_stl.mjs    writes out/*.stl from the same geometry the site uses
+out/                  generated STLs
+test/geom.test.mjs    volumes, sizes and derived dimensions must not drift
+legacy/               the original CadQuery model (design v1, superseded)
 ```
+
+## The efficient default
+
+- **Pocket width is derived**: `pitch − wall`. Walls went 2.6 → 1.6 mm, so the
+  plier pockets went 24.5 → 28.4 mm wide (+16 % capacity) with no change in
+  footprint.
+- **`floor = 0`** cuts every pocket straight through: the drawer becomes the
+  floor. Model volume drops from 1040 cm³ to 425 cm³ for the pair.
+- **28 mm tall** instead of 32 — the drawer is 45 deep, the extra height was
+  doing nothing.
+- The outer rim is one wall thick, and the pockets run to within 1.6 mm of the
+  edge, so no material sits where no tool does.
+
+A floorless part is a skeleton: it cannot be lifted out with tools in it, and it
+wants a brim when printed. Set `floor = 1.2` if you'd rather lift the module out
+and keep the finger chutes — that path keeps the 11 mm front margin the chutes
+need.
 
 ## What it makes
 
 | part | size | contents |
 |---|---|---|
-| **A — plier comb** | 150 × 229 × 32 | 5 cradles: 24.5 mm handle well → shoulder → 14.5 mm jaw channel, 45° front chute |
-| **B — drills, tips** | 187 × 229 × 32 | 3 thin tool slots · one open drill-bit tub (112 × 136 × 29 deep) · 7 solder-tip scallops |
-| **fit coupon** | 62 × 52 × 32 | corner of A — print this first |
-| **parts tray** | 338 × 212 × 32 | 8 × 5 compartment grid, 42 mm cells — splits into two 172 mm halves with a stepped lap joint (`printable halves = 2`) |
-| **bins** | 1×1 / 2×1 / 2×2 | loose bins with a scoop front, for bearings, screws, parts |
+| **A — plier comb** | 152 × 229 × 28 | 5 cradles: 28.4 mm well → shoulder → 18.4 mm jaw channel |
+| **B — drills, tips** | 185 × 229 × 28 | 3 thin slots · open drill-bit tub · 7 solder-tip ribs |
+| **fit coupon** | 62 × 52 × 28 | corner of A — print this first, ~10 min |
+| **parts tray** | 352 × 212 × 28 | 8 × 5 grid, 42 mm cells, splits into two |
+| **bins** | 1×1 / 2×1 / 2×2 | loose bins — these always keep a floor, or they aren't bins |
 
-## Printing
+## Printing a skeleton
 
+- 1.6 mm walls = 4 perimeters at 0.4 mm, or 3 at 0.6 mm. Nothing else is solid.
+- Set **top solid layers to 0 and infill to 0 %** — there is no solid region to
+  fill, and the slicer will otherwise waste time on the rim.
+- **Brim, 5 mm.** The first layer is a set of free-standing wall outlines with no
+  plate under them.
 - PETG or ASA; PLA is fine for light bits but creeps under a heavy crimper.
-- 0.2 mm layers, 3 perimeters, 15 % gyroid. No supports — every overhang is 45°
-  or an inside corner.
-- Module A and B are 229 mm deep: check your bed. The parts tray will need to be
-  generated in two halves on a 220 mm bed (drop `rows`) or printed on a bigger one.
-- The tools drawer is ~1.08 L of solid across both modules → roughly 400 g.
+- The pair is ~425 cm³ of model, roughly 150 g printed.
 
 ## Running it locally
 
 ```bash
-npm install          # just @jscad/modeling, for the test
-npm test             # volumes must match the CadQuery reference
+npm install          # @jscad/modeling, for the tests and the exporter
+npm test             # volumes / sizes / derived widths must not drift
+npm run export       # regenerate out/*.stl from docs/js/geom.js
 npm run serve        # http://localhost:8080
 ```
 
@@ -61,11 +81,10 @@ Adding a part: write `buildX(P)` in `geom.js`, add an entry to `PARTS` in
 
 ## Deploying (GitHub Pages)
 
-Pages is already configured for this repo: **Settings → Pages → Source =
-Deploy from a branch → `main` / `docs`**. push to `main` and the site rebuilds in
-about a minute.
+Already configured: **Settings → Pages → Source = Deploy from a branch →
+`main` / `docs`**. Push to `main`, the site rebuilds in about a minute.
 
-To do it from scratch on another repo:
+From scratch on another repo:
 
 ```bash
 git init && git add -A && git commit -m "first commit"

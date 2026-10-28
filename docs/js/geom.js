@@ -23,19 +23,19 @@ export const DEFAULTS = {
   // drawer interior, measured
   DW: 340, DD: 230, DH: 45,
   CLR: 0.7,      // air gap per side
-  WALL: 2.6,     // thinnest wall between pockets
-  FLOOR: 2.8,    // material under the deepest pocket
-  MOD_H: 32,     // block height
-  R_OUT: 7,      // outer corner radius
+  WALL: 1.6,     // every wall between pockets - thin on purpose
+  FLOOR: 0,      // 0 = no floor at all, the drawer is the floor
+  MOD_H: 28,     // block height
+  R_OUT: 5,      // outer corner radius (clamped: a big radius eats thin rims)
   GAP: 2,        // gap between the two modules
-  // module A - pliers
-  aCount: 5, aPitch: 30, aHandle: 24.5, aJaw: 14.5, aHandleLen: 96,
+  // module A - pliers. pocket width = pitch - WALL, so thin walls widen it
+  aCount: 5, aPitch: 30, aJawInset: 10, aHandleLen: 96,
   // module B - thin tools
-  bCount: 3, bPitch: 24, bHandle: 18, bJaw: 13, bHandleLen: 70,
+  bCount: 3, bPitch: 24, bJawInset: 6, bHandleLen: 70,
   // module B - drill-bit tub + solder tips
-  tipCount: 7, tipPitch: 14.5, tipLen: 70, tipDepth: 11, tipDia: 9,
+  tipCount: 7, tipPitch: 14.5, tipLen: 70, tipDepth: 11, tipDia: 9, RIB_H: 10,
   // parts grid
-  gridCols: 8, gridRows: 5, cell: 42, cellWall: 2.4, splits: 2,
+  gridCols: 8, gridRows: 5, cell: 42, cellWall: 1.6, splits: 2,
   // bed check
   bedW: 230, bedD: 230,
 };
@@ -109,6 +109,11 @@ function toolPocket(cx, y0, ys, y1, hw, sw, z0, z1) {
   return extrude(pts, z0, z1);
 }
 
+const cuboid = (x0, x1, y0, y1, z0, z1) => primitives.cuboid({
+  size: [x1 - x0, y1 - y0, z1 - z0],
+  center: [(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2],
+});
+
 /** 45 deg finger ramp cut into a pocket wall. sign=+1 ramps toward +Y.
  *  Stops `lift` above the floor so it is printable and leaves a small lip. */
 function scoop(x0, x1, yEdge, zFloor, size, sign, lift = 1.2) {
@@ -131,18 +136,35 @@ function scoopInside(x0, x1, halfWidth, rOut, yEdge, zFloor, size, sign) {
 
 /* ------------------------------------------------------------ drawer math */
 
+/** A corner radius larger than ~3.4x the rim would cut through the material
+ *  beside the corner pockets, so clamp it rather than emit a broken part. */
+export const rOut = (P) => Math.min(P.R_OUT, 3.4 * P.WALL);
+
 export function layout(P) {
   const W = P.DW - 2 * P.CLR;
   const D = P.DD - 2 * P.CLR;
   const H = P.MOD_H;
-  const WA = P.aCount * P.aPitch;
+  // a module is n cells of `pitch` plus one rim wall, so the outer rim is as
+  // thick as the internal walls and the pockets can stay (pitch - WALL) wide
+  const WA = P.aCount * P.aPitch + P.WALL;
   const WB = W - WA - P.GAP;
   return {
     W, D, H, WA, WB,
-    yFront: -D / 2 + 11,
-    yBack: D / 2 - 9,
+    // with a floor the pockets stop short of the rim so a chute fits; without
+    // one they run to within a single wall of the edge and the part is a
+    // skeleton - no material doing nothing
+    yFront: -D / 2 + (P.FLOOR > 0 ? 11 : P.WALL),
+    yBack: D / 2 - (P.FLOOR > 0 ? 9 : P.WALL),
+    chutes: P.FLOOR > 0,
     xa: -W / 2 + WA / 2,
     xb: -W / 2 + WA + P.GAP + WB / 2,
+    aHandle: Math.max(6, P.aPitch - P.WALL),
+    aJaw: Math.max(4, P.aPitch - P.WALL - P.aJawInset),
+    bHandle: Math.max(5, P.bPitch - P.WALL),
+    bJaw: Math.max(3, P.bPitch - P.WALL - P.bJawInset),
+    // every pocket is cut from here: below the floor if there is one, right
+    // through the part if there is not
+    zCut: P.FLOOR > 0 ? P.FLOOR : -1,
   };
 }
 
@@ -150,17 +172,20 @@ export function layout(P) {
 
 export function buildA(P) {
   const L = layout(P);
-  const { H, D, yFront: yf, yBack: yb } = L;
+  const { H, D, yFront: yf, yBack: yb, WA } = L;
   const ys = yf + P.aHandleLen;
-  let s = slab(L.WA, D, H, P.R_OUT);
+  const pitch = P.aPitch; const hw = L.aHandle; const sw = L.aJaw;
+  let s = slab(WA, D, H, rOut(P));
 
   const cuts = [];
   const scoops = [];
   for (let i = 0; i < P.aCount; i++) {
-    const cx = -L.WA / 2 + P.aPitch / 2 + i * P.aPitch;
-    cuts.push(toolPocket(cx, yf, ys, yb, P.aHandle, P.aJaw, P.FLOOR, H + 1));
-    scoops.push(scoopInside(cx - P.aHandle / 2, cx + P.aHandle / 2, L.WA / 2, P.R_OUT, yf, P.FLOOR, 12, -1));
-    scoops.push(scoopInside(cx - P.aJaw / 2, cx + P.aJaw / 2, L.WA / 2, P.R_OUT, yb, P.FLOOR, 7, 1));
+    const cx = -WA / 2 + P.WALL + (pitch - P.WALL) / 2 + i * pitch;
+    cuts.push(toolPocket(cx, yf, ys, yb, hw, sw, L.zCut, H + 1));
+    if (L.chutes) {
+      scoops.push(scoopInside(cx - hw / 2, cx + hw / 2, WA / 2, rOut(P), yf, L.zCut, 12, -1));
+      scoops.push(scoopInside(cx - sw / 2, cx + sw / 2, WA / 2, rOut(P), yb, L.zCut, 7, 1));
+    }
   }
   s = booleans.subtract(s, ...cuts);
   return booleans.subtract(s, ...scoops.filter(Boolean));
@@ -172,50 +197,75 @@ export function buildB(P) {
   const L = layout(P);
   const { H, D, yFront: yf, yBack: yb, WB } = L;
   const ys = yf + P.bHandleLen;
+  const pitch = P.bPitch; const hw = L.bHandle; const sw = L.bJaw;
 
-  let s = slab(WB, D, H, P.R_OUT);
+  let s = slab(WB, D, H, rOut(P));
   const cuts = [];
   const scoops = [];
-  let lastX = 0;
+  let lastX = -WB / 2;
   for (let i = 0; i < P.bCount; i++) {
-    const cx = -WB / 2 + 12 + i * P.bPitch;
+    const cx = -WB / 2 + P.WALL + (pitch - P.WALL) / 2 + i * pitch;
     lastX = cx;
-    cuts.push(toolPocket(cx, yf, ys, yb, P.bHandle, P.bJaw, P.FLOOR, H + 1));
-    scoops.push(scoopInside(cx - P.bHandle / 2, cx + P.bHandle / 2, WB / 2, P.R_OUT, yf, P.FLOOR, 10, -1));
-    scoops.push(scoopInside(cx - P.bJaw / 2, cx + P.bJaw / 2, WB / 2, P.R_OUT, yb, P.FLOOR, 6, 1));
+    cuts.push(toolPocket(cx, yf, ys, yb, hw, sw, L.zCut, H + 1));
+    if (L.chutes) {
+      scoops.push(scoopInside(cx - hw / 2, cx + hw / 2, WB / 2, rOut(P), yf, L.zCut, 10, -1));
+      scoops.push(scoopInside(cx - sw / 2, cx + sw / 2, WB / 2, rOut(P), yb, L.zCut, 6, 1));
+    }
   }
   s = booleans.subtract(s, ...cuts);
   s = booleans.subtract(s, ...scoops.filter(Boolean));
 
-  // right-hand zones: drill-bit tub + solder tips
-  const BX0 = lastX + P.bHandle / 2 + P.WALL;
+  // right-hand zones: one open drill-bit tub, solder tips behind it
+  const BX0 = lastX + hw / 2 + P.WALL;
   const BX1 = WB / 2 - P.WALL;
   const BW = BX1 - BX0;
   const BCX = (BX0 + BX1) / 2;
   if (BW < 40) return s; // drawer too narrow for the right-hand zones
 
   const zones = [];
-
-  // Two zones only: one big open drill-bit tub at the front, solder tips at
-  // the back. A tub holds a mixed set in less space than any fitted index.
+  const ribCuts = [];
   const span = yb - yf;
   const tipBlock = P.tipCount > 0 ? P.tipLen + P.WALL : 0;
   const tubD = span - tipBlock;
 
   if (tubD > 25) {
-    zones.push(pocket(BW, tubD, BCX, yf + tubD / 2, P.FLOOR, H + 1, 5));
-    zones.push(scoop(BCX - BW / 2, BCX + BW / 2, yf, P.FLOOR, Math.min(24, tubD / 2), -1));
-  }
-  if (tipBlock && tubD > 25) {
-    const tipFloor = H - P.tipDepth;
-    const yTip = yb - P.tipLen;
-    zones.push(pocket(BW, P.tipLen, BCX, yTip + P.tipLen / 2, tipFloor, H + 1, 6));
-    for (let i = 0; i < P.tipCount; i++) {
-      const x = BCX + (i - (P.tipCount - 1) / 2) * P.tipPitch;
-      zones.push(yRod(x, yTip + P.tipLen / 2, P.tipLen - 3, P.tipDia, tipFloor + 2));
+    zones.push(pocket(BW, tubD, BCX, yf + tubD / 2, L.zCut, H + 1, 5));
+    if (L.chutes) {
+      zones.push(scoopInside(BCX - BW / 2, BCX + BW / 2, WB / 2, 0,
+        yf, L.zCut, Math.min(24, tubD / 2), -1));
     }
   }
-  return booleans.subtract(s, ...zones);
+
+  if (tipBlock && tubD > 25) {
+    const yTip = yb - P.tipLen;
+    if (P.FLOOR > 0) {
+      // floored: a shallow tray with scallops that stop the tips rolling
+      const tipFloor = H - P.tipDepth;
+      zones.push(pocket(BW, P.tipLen, BCX, yTip + P.tipLen / 2, tipFloor, H + 1, 6));
+      for (let i = 0; i < P.tipCount; i++) {
+        const x = BCX + (i - (P.tipCount - 1) / 2) * P.tipPitch;
+        zones.push(yRod(x, yTip + P.tipLen / 2, P.tipLen - 3, P.tipDia, tipFloor + 2));
+      }
+    } else {
+      // floorless: cut the zone right through, then stand short ribs in it -
+      // a raised shelf would be a bridge with nothing under it
+      zones.push(pocket(BW, P.tipLen, BCX, yTip + P.tipLen / 2, L.zCut, H + 1, 3));
+      const lanes = Math.max(1, P.tipCount);
+      const step = P.tipLen / lanes;
+      for (let i = 0; i <= lanes; i++) {
+        const y0 = yTip + i * step - (i === 0 ? 0 : P.WALL / 2);
+        const y1 = y0 + (i === 0 || i === lanes ? P.WALL / 2 : P.WALL);
+        ribCuts.push([y0, y1]);
+      }
+    }
+  }
+  s = booleans.subtract(s, ...zones);
+  if (ribCuts.length) {
+    // short ribs across the tip zone, 1.6 x 10 mm, joined to the side walls
+    const ribs = ribCuts.map(([y0, y1]) => cuboid(BX0, BX1, y0, y1, 0, P.RIB_H));
+    s = booleans.union(s, ...ribs);
+  }
+  return s;
 }
 
 /* ------------------------------------------------------------ assembly */
@@ -254,7 +304,7 @@ export function buildTray(P) {
       cuts.push(pocket(P.cell - w, P.cell - w,
         -W / 2 + w + P.cell / 2 + i * P.cell,
         -D / 2 + w + P.cell / 2 + j * P.cell,
-        P.FLOOR, P.MOD_H + 1, 4));
+        P.FLOOR > 0 ? P.FLOOR : -1, P.MOD_H + 1, 4));
     }
   }
   const g = booleans.subtract(s, ...cuts);
@@ -297,8 +347,9 @@ export function buildBin(P, cols, rows) {
   const D = rows * P.cell - 1;
   const H = P.MOD_H;
   let s = slab(W, D, H, 4);
-  s = booleans.subtract(s, pocket(W - 2 * w, D - 2 * w, 0, 0, P.FLOOR, H + 1, 4));
-  const ramp = scoopInside(-W / 2 + w, W / 2 - w, W / 2, 4, -D / 2 + w, P.FLOOR,
+  const bf = Math.max(P.FLOOR, 1.2); // a bin has to hold parts when lifted
+  s = booleans.subtract(s, pocket(W - 2 * w, D - 2 * w, 0, 0, bf, H + 1, 4));
+  const ramp = scoopInside(-W / 2 + w, W / 2 - w, W / 2, 4, -D / 2 + w, bf,
     Math.min(18, (D - 2 * w) / 2), -1);
   if (ramp) s = booleans.subtract(s, ramp);
   return { geom: s, size: [W, D, H] };

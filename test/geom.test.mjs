@@ -1,36 +1,53 @@
-/* Smoke test: the browser geometry must match the CadQuery reference model.
- *   A_plier_comb   -> 506.4 cm3 solid, 150.0 x 228.7 x 32.0
- *   B_bits_tips_tub-> 531.5 cm3 solid, 186.7 x 228.7 x 32.1
+/* Regression tests for docs/js/geom.js - the geometry the site actually ships.
+ * Volumes are the recorded values for the default parameters; a change here is
+ * a design change, so update the numbers deliberately.
  */
 import * as G from '../docs/js/geom.js';
 
 const P = { ...G.DEFAULTS };
-const cm3 = (g) => (G.volume(g) / 1000).toFixed(1);
-const box = (g) => G.bounds(g).size.map((v) => v.toFixed(1)).join(' x ');
+const cm3 = (g) => +(G.volume(g) / 1000).toFixed(1);
+const box = (g) => G.bounds(g).size.map((v) => +v.toFixed(1));
+
+let bad = 0;
+const eq = (label, got, want, tol) => {
+  const ok = Array.isArray(want)
+    ? got.length === want.length && got.every((v, i) => Math.abs(v - want[i]) <= tol)
+    : Math.abs(got - want) <= tol;
+  console.log(`${ok ? 'ok  ' : 'FAIL'} ${label}: ${got}`);
+  if (!ok) bad++;
+};
 
 const a = G.buildA(P);
 const b = G.buildB(P);
-const c = G.buildCoupon(P);
-const t = G.buildTray(P);
+const coupon = G.buildCoupon(P);
+const tray = G.buildTray(P);
 const bin = G.buildBin(P, 2, 2);
+const asm = G.buildAssembly(P);
+const L = G.layout(P);
 
-console.log('A   ', cm3(a), 'cm3  ', box(a));
-console.log('B   ', cm3(b), 'cm3  ', box(b));
-console.log('coup', cm3(c), 'cm3  ', box(c));
-console.log('tray', cm3(t.geom), 'cm3  ', box(t.geom));
-console.log('bin ', cm3(bin.geom), 'cm3  ', box(bin.geom));
+eq('A volume', cm3(a), 260.0, 1.5);
+eq('B volume', cm3(b), 165.3, 1.5);
+eq('coupon volume', cm3(coupon), 8.3, 0.5);
+eq('tray volume', cm3(tray.geom), 186.7, 1.5);
+eq('bin volume', cm3(bin.geom), 20.2, 0.5);
+eq('assembly volume', cm3(asm), 425.3, 3);
+
+eq('A size', box(a), [151.6, 228.6, 28.0], 0.2);
+eq('B size', box(b), [185.0, 228.6, 28.0], 0.2);
+eq('tray size', box(tray.geom), [352.5, 211.6, 28.0], 0.5);
+
+// derived pocket widths: pitch - wall, so thin walls really do buy space
+eq('handle width', +L.aHandle.toFixed(1), 28.4, 0.1);
+eq('jaw width', +L.aJaw.toFixed(1), 18.4, 0.1);
+eq('modules fit the drawer', +(L.WA + P.GAP + L.WB).toFixed(1), 338.6, 0.1);
+eq('tray halves fit a bed', +tray.pieceSize[0].toFixed(1), 170.5, 2);
+
+// the floorless part must not have a floor: volume well under a floored one
+const flooredA = G.buildA({ ...P, FLOOR: 2.4 });
+eq('floor costs plastic', cm3(flooredA) > cm3(a) + 20, true, 0);
 
 const stl = G.toSTL(a);
-console.log('STL ', (stl.byteLength / 1024).toFixed(0), 'kB  tris', new DataView(stl).getUint32(80, true));
+eq('STL triangles', new DataView(stl).getUint32(80, true), G.triangles(a).length, 0);
 
-let bad = 0;
-const near = (x, y, tol) => Math.abs(x - y) <= tol;
-if (!near(+cm3(a), 506.4, 3)) { console.log('FAIL volume A'); bad++; }
-if (!near(+cm3(b), 531.5, 3)) { console.log('FAIL volume B'); bad++; }
-if (!near(+box(a).split(' x ')[0], 150, 0.3)) { console.log('FAIL width A'); bad++; }
-const asm = G.buildAssembly(P);
-console.log('asm ', cm3(asm), 'cm3  ', box(asm));
-if (!near(+cm3(asm), 1037.9, 4)) { console.log('FAIL volume assembly'); bad++; }
-
-console.log(bad ? `${bad} check(s) failed` : 'all checks passed');
+console.log(bad ? `\n${bad} check(s) failed` : '\nall checks passed');
 process.exit(bad ? 1 : 0);

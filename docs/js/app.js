@@ -14,20 +14,20 @@ const GROUPS = {
     ['DH', 'height', 10, 200, 1, 'mm'],
     ['CLR', 'gap per side', 0, 3, 0.1, 'mm'],
     ['MOD_H', 'block height', 10, 120, 0.5, 'mm'],
+    ['WALL', 'wall thickness', 0.8, 6, 0.1, 'mm'],
+    ['FLOOR', 'floor (0 = none)', 0, 10, 0.2, 'mm'],
     ['R_OUT', 'corner radius', 0, 40, 0.5, 'mm'],
   ]],
   A: ['Pliers / cutters', [
     ['aCount', 'cradles', 1, 10, 1, ''],
     ['aPitch', 'pitch', 15, 60, 0.5, 'mm'],
-    ['aHandle', 'handle width', 8, 60, 0.5, 'mm'],
-    ['aJaw', 'jaw width', 4, 40, 0.5, 'mm'],
+    ['aJawInset', 'jaw narrower by', 0, 30, 0.5, 'mm'],
     ['aHandleLen', 'handle depth', 30, 180, 1, 'mm'],
   ]],
   B: ['Thin tools', [
     ['bCount', 'slots', 0, 8, 1, ''],
     ['bPitch', 'pitch', 12, 48, 0.5, 'mm'],
-    ['bHandle', 'handle width', 6, 40, 0.5, 'mm'],
-    ['bJaw', 'jaw width', 4, 30, 0.5, 'mm'],
+    ['bJawInset', 'jaw narrower by', 0, 20, 0.5, 'mm'],
     ['bHandleLen', 'handle depth', 20, 150, 1, 'mm'],
   ]],
   bits: ['Drill-bit tub, solder tips', [
@@ -58,7 +58,7 @@ const PARTS = [
     groups: ['drawer', 'A', 'print'],
     build: (p) => G.buildA(p),
     name: (p) => `A_pliers_${p.aCount}x${p.aPitch}`,
-    hint: 'Wide handle well + narrow jaw channel. The shoulder where they step stops the tool sliding forward.',
+    hint: 'Handle well + narrower jaw channel; the shoulder stops the tool sliding forward. Pocket width is pitch − wall, so thin walls buy space. Floor 0 = a skeleton: no bottom, nothing wasted, but it lives in the drawer.',
   },
   {
     id: 'B',
@@ -269,14 +269,14 @@ function build() {
   drawerBox.visible = part.groups.includes('drawer');
 
   const vol = G.volume(geom) / 1000;
-  const mass = vol * 0.38;
+  const mass = vol * 0.35; // ≈ 3 perimeters + 15 % infill, per cm3 of model volume
   const chk = extra && extra.pieceSize ? extra.pieceSize : b.size;
   const fits = part.noBed || (chk[0] <= P.bedW && chk[1] <= P.bedD);
   const lines = [
     extra && extra.pieces > 1
       ? `${extra.pieces} pieces · each ${extra.pieceSize[0].toFixed(1)} × ${extra.pieceSize[1].toFixed(1)} × ${extra.pieceSize[2].toFixed(1)} mm`
       : `${b.size[0].toFixed(1)} × ${b.size[1].toFixed(1)} × ${b.size[2].toFixed(1)} mm`,
-    `${vol.toFixed(0)} cm³ solid · ≈${mass.toFixed(0)} g printed`,
+    `${vol.toFixed(0)} cm³ model · ≈${mass.toFixed(0)} g printed`,
     `${tris.length.toLocaleString()} triangles`,
   ];
   document.getElementById('hud').innerHTML = lines.join('\n')
