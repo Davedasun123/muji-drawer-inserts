@@ -398,7 +398,33 @@ export const STACK_D1 = [
   { n: 'Wire stripper', w: 165, d: 64, note: 'closed pose, lies across the drawer' },
 ];
 
-export const STACK_SETS = { 1: STACK_D1, 2: STACK_D2 };
+/* ---- one drawer for everything (5 pliers + 20 bench tools) -------------
+ * Measured tool area is ~111 000 mm2 and one drawer floor is 77 000 mm2, so
+ * it only goes in as two tiers: 26 mm at the bottom for anything thick, 16 mm
+ * on top for the thin families, which leaves 3 mm of headroom in a 45 mm
+ * drawer. Both tiers are pencilled from current numbers.
+ */
+export const STACK_C1 = [
+  { n: 'Crimper', x: 1.6, y: 1.6, w: 248, d: 52, note: 'green, 13 mm thick' },
+  { n: 'Tape measure', x: 251.2, y: 1.6, w: 74, d: 69, note: 'on its edge, 25 mm - the tallest thing' },
+  { n: 'Side cutter', x: 1.6, y: 72.2, w: 170, d: 67, note: 'blue, 15 mm' },
+  { n: 'Long screwdrivers', x: 173.2, y: 72.2, w: 155, d: 50, note: 'both, stacked - under 26 mm' },
+  { n: 'Combination pliers', x: 1.6, y: 140.8, w: 160, d: 68, note: 'closed pose, 15 mm' },
+  { n: 'Wire stripper', x: 163.2, y: 140.8, w: 165, d: 68, note: 'closed pose, 16 mm' },
+];
+
+export const STACK_C2 = [
+  { n: 'Drills + hex keys', x: 1.6, y: 1.6, w: 110, d: 25, note: 'tube + 2 L-keys' },
+  { n: 'Tweezers', x: 113.6, y: 1.6, w: 130, d: 22, note: '3 pairs, stacked' },
+  { n: 'Flat spanners', x: 245.6, y: 1.6, w: 85, d: 40, note: '6, stacked' },
+  { n: 'Small drivers', x: 113.6, y: 25.6, w: 110, d: 30, note: 'the short ones, stacked' },
+  { n: 'Flux syringes', x: 1.6, y: 28.6, w: 95, d: 25, note: 'both, stacked' },
+  { n: 'Swiss army knife', x: 225.6, y: 43.6, w: 105, d: 32, note: '17 mm - why this tier is 18, not 16' },
+  { n: 'Probes', x: 1.6, y: 57.6, w: 165, d: 30, note: 'both, stacked' },
+  { n: 'Spring cutters', x: 1.6, y: 89.6, w: 289, d: 129, note: 'flush cutter + needle-nose + side cutter, full extension' },
+];
+
+export const STACK_SETS = { 1: STACK_D1, 2: STACK_D2, 3: STACK_C1, 4: STACK_C2 };
 
 /** The rectangles left over once the cells are placed, as horizontal bands. */
 export function freeRects(placed, W, D, wall) {

@@ -6,7 +6,8 @@ import * as G from '../docs/js/geom.js';
 
 const P = { ...G.DEFAULTS };
 const W = P.stackW; const wall = P.WALL; const inner = W - 2 * wall;
-const cells = G.STACK_SETS[2].map(({ n, w, d, note }) => ({ n, w, d, note }));
+const SET = Number(process.argv[2] || 2);
+const cells = G.STACK_SETS[SET].map(({ n, w, d, note }) => ({ n, w, d, note }));
 
 function pack(order) {
   const placed = [];
@@ -41,7 +42,7 @@ for (let i = 0; i < ITER; i++) {
 const sorted = best.placed.sort((a, b) => (a.y - b.y) || (a.x - b.x));
 const used = sorted.reduce((a, c) => a + c.w * c.d, 0);
 console.log(`// ${(100 * used / (W * best.D)).toFixed(0)}% fill, ${best.D.toFixed(0)} mm deep\n`);
-console.log('export const STACK_D2 = [');
+console.log(`export const STACK_SET_${SET} = [`);
 for (const c of sorted) {
   console.log(`  { n: '${c.n}', x: ${c.x.toFixed(1)}, y: ${c.y.toFixed(1)}, w: ${c.w}, d: ${c.d}, note: '${c.note}' },`);
 }
