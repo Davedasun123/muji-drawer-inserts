@@ -2,8 +2,8 @@
 Muji 34 x 23 x 4.5 cm drawer -> two-part tool insert.
 
   Module A  "plier comb"   5 cradles, wide handle pocket + narrow jaw pocket
-  Module B  "bits + tips"  3 thin slots, 20 hex-bit pockets, 7 solder-tip
-                           grooves, and one open drill-bit tub
+  Module B  "bits + tips"  3 thin slots, one open drill-bit tub, and 7
+                           solder-tip grooves
 
 Units mm. Each module is built with the block centre at the origin and is
 placed into drawer coordinates only for previews / the assembly file.
@@ -71,11 +71,6 @@ def tool_pocket(cx, y0, ys, y1, hw, sw, z0, z1):
     return prism(p, z0, z1)
 
 
-def hex_bit_pocket(cx, cy, dia, z0, z1):
-    return (cq.Workplane("XY").workplane(offset=z0)
-            .center(cx, cy).circle(dia / 2).extrude(z1 - z0))
-
-
 def scoop(x0, x1, y_edge, z_floor, size, sign):
     """45 deg finger ramp cut into a pocket wall. sign=+1 ramps toward +Y.
     Stops LIP above the pocket floor: a knife edge there is unprintable and it
@@ -132,40 +127,32 @@ for xc in B_XS:
     b = b.cut(scoop(xc - B_HW / 2, xc + B_HW / 2, Y_FRONT, FLOOR, 10.0, -1))
     b = b.cut(scoop(xc - B_SW / 2, xc + B_SW / 2, Y_BACK, FLOOR, 6.0, +1))
 
-# --- right half of module B: hex bits / solder tips / drill bit tub -------
+# --- right half of module B: drill-bit tub + solder tips ------------------
 BX0 = B_XS[-1] + B_HW / 2 + WALL
 BX1 = WB / 2 - WALL
 BCX, BW = (BX0 + BX1) / 2, BX1 - BX0
 
-# zone 1 (back): 1/4" driver bits, sunk into a shelf so they sit flush
-BIT_DIA, BIT_PITCH, BIT_ROWS, BIT_SHELF, BIT_ROWH = 8.0, 10.5, 2, 14.0, 10.5
-bit_h = BIT_ROWS * BIT_ROWH + 4.0
-y_bit = Y_BACK - bit_h / 2 - 1.0
-b = b.cut(bin_pocket(BW, bit_h, BCX, y_bit, H - BIT_SHELF, H + 1, 4.0))
-ncols = int((BW - 4) / BIT_PITCH)
-for r in range(BIT_ROWS):
-    for c in range(ncols):
-        b = b.cut(hex_bit_pocket(BCX + (c - (ncols - 1) / 2) * BIT_PITCH,
-                                 y_bit + (r - (BIT_ROWS - 1) / 2) * BIT_ROWH,
-                                 BIT_DIA, FLOOR, H - BIT_SHELF))
+TIP_N, TIP_PITCH, TIP_L, TIP_DEPTH, TIP_R = 7, 14.5, 70.0, 11.0, 4.5
 
-# zone 2 (middle): solder tips, lying in shallow scallops
-TIP_DEPTH, TIP_L, TIP_PITCH, TIP_N, TIP_R = 11.0, 70.0, 14.5, 7, 4.5
-y_tip_back = y_bit - bit_h / 2 - WALL
-y_tip_front = y_tip_back - TIP_L
-b = b.cut(bin_pocket(BW, TIP_L, BCX, (y_tip_front + y_tip_back) / 2,
-                     H - TIP_DEPTH, H + 1, 6.0))
-for i in range(TIP_N):
-    x = BCX + (i - (TIP_N - 1) / 2) * TIP_PITCH
-    b = b.cut(cq.Workplane().add(cq.Solid.makeCylinder(
-        TIP_R, TIP_L - 2, cq.Vector(x, y_tip_front + 1, H - TIP_DEPTH + 2.0),
-        cq.Vector(0, 1, 0))))
+span = Y_BACK - Y_FRONT
+tip_block = TIP_L + WALL if TIP_N else 0.0
+tub_d = span - tip_block
 
-# zone 3 (front): drill bit tub - one open box beats a fitted index
-y_tub_back = y_tip_front - WALL
-b = b.cut(bin_pocket(BW, y_tub_back - Y_FRONT, BCX, (Y_FRONT + y_tub_back) / 2,
-                     FLOOR, H + 1, 5.0))
-b = b.cut(scoop(BCX - BW / 2 + 3, BCX + BW / 2 - 3, Y_FRONT, FLOOR, 20.0, -1))
+# one big open tub beats any fitted index for mixed drill sizes
+if tub_d > 25:
+    b = b.cut(bin_pocket(BW, tub_d, BCX, Y_FRONT + tub_d / 2, FLOOR, H + 1, 5.0))
+    b = b.cut(scoop(BCX - BW / 2, BCX + BW / 2, Y_FRONT, FLOOR,
+                    min(24.0, tub_d / 2), -1))
+
+# solder tips, lying in shallow scallops
+if tip_block and tub_d > 25:
+    y_tip = Y_BACK - TIP_L
+    b = b.cut(bin_pocket(BW, TIP_L, BCX, y_tip + TIP_L / 2, H - TIP_DEPTH, H + 1, 6.0))
+    for i in range(TIP_N):
+        x = BCX + (i - (TIP_N - 1) / 2) * TIP_PITCH
+        b = b.cut(cq.Workplane().add(cq.Solid.makeCylinder(
+            TIP_R, TIP_L - 3, cq.Vector(x, y_tip + 1.5, H - TIP_DEPTH + 2.0),
+            cq.Vector(0, 1, 0))))
 
 # small corner coupon: print this first, it takes 10 min and proves the fit
 coupon = a.intersect(cq.Workplane("XY").center(-WA / 2 + 31, -D / 2 + 26)

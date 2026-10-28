@@ -30,11 +30,7 @@ const GROUPS = {
     ['bJaw', 'jaw width', 4, 30, 0.5, 'mm'],
     ['bHandleLen', 'handle depth', 20, 150, 1, 'mm'],
   ]],
-  bits: ['Bits, solder tips, tub', [
-    ['bitRows', 'bit rows', 0, 6, 1, ''],
-    ['bitDia', 'bit ⌀', 4, 14, 0.1, 'mm'],
-    ['bitPitch', 'bit pitch', 7, 20, 0.1, 'mm'],
-    ['bitShelf', 'bit shelf depth', 6, 28, 0.5, 'mm'],
+  bits: ['Drill-bit tub, solder tips', [
     ['tipCount', 'tip grooves', 0, 14, 1, ''],
     ['tipPitch', 'tip pitch', 8, 30, 0.5, 'mm'],
     ['tipLen', 'tip length', 30, 150, 1, 'mm'],
@@ -66,11 +62,11 @@ const PARTS = [
   },
   {
     id: 'B',
-    label: 'Module B — bits, tips, tub',
+    label: 'Module B — drills, tips',
     groups: ['drawer', 'B', 'bits', 'print'],
     build: (p) => G.buildB(p),
     name: () => 'B_bits_tips_tub',
-    hint: 'Thin tool slots, a hex-bit field on a sunken shelf, solder-tip scallops, and one open drill-bit tub.',
+    hint: 'Three thin tool slots, one open drill-bit tub as deep as the rest of the module allows, and solder tips in scallops. Set tip grooves to 0 to give the whole depth to drills.',
   },
   {
     id: 'both',

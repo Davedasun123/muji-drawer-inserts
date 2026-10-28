@@ -24,7 +24,7 @@ test/geom.test.mjs    checks the browser geometry against the CadQuery volumes
 | part | size | contents |
 |---|---|---|
 | **A — plier comb** | 150 × 229 × 32 | 5 cradles: 24.5 mm handle well → shoulder → 14.5 mm jaw channel, 45° front chute |
-| **B — bits, tips, tub** | 187 × 229 × 32 | 3 thin tool slots · 20 hex-bit pockets on a sunken shelf · 7 solder-tip scallops · open drill-bit tub |
+| **B — drills, tips** | 187 × 229 × 32 | 3 thin tool slots · one open drill-bit tub (112 × 136 × 29 deep) · 7 solder-tip scallops |
 | **fit coupon** | 62 × 52 × 32 | corner of A — print this first |
 | **parts tray** | 338 × 212 × 32 | 8 × 5 compartment grid, 42 mm cells — splits into two 172 mm halves with a stepped lap joint (`printable halves = 2`) |
 | **bins** | 1×1 / 2×1 / 2×2 | loose bins with a scoop front, for bearings, screws, parts |

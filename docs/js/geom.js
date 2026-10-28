@@ -32,8 +32,7 @@ export const DEFAULTS = {
   aCount: 5, aPitch: 30, aHandle: 24.5, aJaw: 14.5, aHandleLen: 96,
   // module B - thin tools
   bCount: 3, bPitch: 24, bHandle: 18, bJaw: 13, bHandleLen: 70,
-  // module B - bits / tips / tub
-  bitRows: 2, bitDia: 8, bitPitch: 10.5, bitShelf: 14,
+  // module B - drill-bit tub + solder tips
   tipCount: 7, tipPitch: 14.5, tipLen: 70, tipDepth: 11, tipDia: 9,
   // parts grid
   gridCols: 8, gridRows: 5, cell: 42, cellWall: 2.4, splits: 2,
@@ -188,7 +187,7 @@ export function buildB(P) {
   s = booleans.subtract(s, ...cuts);
   s = booleans.subtract(s, ...scoops.filter(Boolean));
 
-  // right-hand zones: hex bits, solder tips, drill tub
+  // right-hand zones: drill-bit tub + solder tips
   const BX0 = lastX + P.bHandle / 2 + P.WALL;
   const BX1 = WB / 2 - P.WALL;
   const BW = BX1 - BX0;
@@ -197,41 +196,24 @@ export function buildB(P) {
 
   const zones = [];
 
-  // 1. hex bits on a shelf near the rim
-  const bitH = P.bitRows * P.bitPitch + 4;
-  const yBit = yb - bitH / 2 - 1;
-  zones.push(pocket(BW, bitH, BCX, yBit, H - P.bitShelf, H + 1, 4));
-  const ncols = Math.max(1, Math.floor((BW - 4) / P.bitPitch));
-  for (let r = 0; r < P.bitRows; r++) {
-    for (let c = 0; c < ncols; c++) {
-      zones.push(roundHole(
-        BCX + (c - (ncols - 1) / 2) * P.bitPitch,
-        yBit + (r - (P.bitRows - 1) / 2) * P.bitPitch,
-        P.bitDia, P.FLOOR, H - P.bitShelf, 32,
-      ));
-    }
-  }
+  // Two zones only: one big open drill-bit tub at the front, solder tips at
+  // the back. A tub holds a mixed set in less space than any fitted index.
+  const span = yb - yf;
+  const tipBlock = P.tipCount > 0 ? P.tipLen + P.WALL : 0;
+  const tubD = span - tipBlock;
 
-  // 2. solder tips: shallow tray with scallops so they cannot roll
-  const yTipBack = yBit - bitH / 2 - P.WALL;
-  const yTipFront = yTipBack - P.tipLen;
-  let yCursor = yTipFront - P.WALL;
-  if (P.tipCount > 0 && yTipFront > yf + 20) {
+  if (tubD > 25) {
+    zones.push(pocket(BW, tubD, BCX, yf + tubD / 2, P.FLOOR, H + 1, 5));
+    zones.push(scoop(BCX - BW / 2, BCX + BW / 2, yf, P.FLOOR, Math.min(24, tubD / 2), -1));
+  }
+  if (tipBlock && tubD > 25) {
     const tipFloor = H - P.tipDepth;
-    zones.push(pocket(BW, P.tipLen, BCX, (yTipFront + yTipBack) / 2, tipFloor, H + 1, 6));
+    const yTip = yb - P.tipLen;
+    zones.push(pocket(BW, P.tipLen, BCX, yTip + P.tipLen / 2, tipFloor, H + 1, 6));
     for (let i = 0; i < P.tipCount; i++) {
       const x = BCX + (i - (P.tipCount - 1) / 2) * P.tipPitch;
-      zones.push(yRod(x, (yTipFront + yTipBack) / 2, P.tipLen - 3, P.tipDia, tipFloor + 2));
+      zones.push(yRod(x, yTip + P.tipLen / 2, P.tipLen - 3, P.tipDia, tipFloor + 2));
     }
-  } else {
-    yCursor = yTipBack - P.WALL;
-  }
-
-  // 3. drill-bit tub takes whatever is left
-  if (yCursor - yf > 25) {
-    zones.push(pocket(BW, yCursor - yf, BCX, (yf + yCursor) / 2, P.FLOOR, H + 1, 5));
-    const ramp = scoop(BCX - BW / 2, BCX + BW / 2, yf, P.FLOOR, 20, -1);
-    if (ramp) zones.push(ramp);
   }
   return booleans.subtract(s, ...zones);
 }

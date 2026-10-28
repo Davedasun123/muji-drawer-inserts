@@ -1,6 +1,6 @@
 /* Smoke test: the browser geometry must match the CadQuery reference model.
- *   A_plier_comb   -> 506.4 cm3 solid, 150 x 228.6 x 32
- *   B_bits_tips_tub-> 576.8 cm3 solid, 186.6 x 228.6 x 32
+ *   A_plier_comb   -> 506.4 cm3 solid, 150.0 x 228.7 x 32.0
+ *   B_bits_tips_tub-> 531.5 cm3 solid, 186.7 x 228.7 x 32.1
  */
 import * as G from '../docs/js/geom.js';
 
@@ -26,11 +26,11 @@ console.log('STL ', (stl.byteLength / 1024).toFixed(0), 'kB  tris', new DataView
 let bad = 0;
 const near = (x, y, tol) => Math.abs(x - y) <= tol;
 if (!near(+cm3(a), 506.4, 3)) { console.log('FAIL volume A'); bad++; }
-if (!near(+cm3(b), 576.8, 3)) { console.log('FAIL volume B'); bad++; }
+if (!near(+cm3(b), 531.5, 3)) { console.log('FAIL volume B'); bad++; }
 if (!near(+box(a).split(' x ')[0], 150, 0.3)) { console.log('FAIL width A'); bad++; }
 const asm = G.buildAssembly(P);
 console.log('asm ', cm3(asm), 'cm3  ', box(asm));
-if (!near(+cm3(asm), 1084, 4)) { console.log('FAIL volume assembly'); bad++; }
+if (!near(+cm3(asm), 1037.9, 4)) { console.log('FAIL volume assembly'); bad++; }
 
 console.log(bad ? `${bad} check(s) failed` : 'all checks passed');
 process.exit(bad ? 1 : 0);
