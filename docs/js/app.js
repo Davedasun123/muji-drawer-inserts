@@ -36,6 +36,11 @@ const GROUPS = {
     ['tipLen', 'tip length', 30, 150, 1, 'mm'],
     ['tipDepth', 'tip tray depth', 4, 26, 0.5, 'mm'],
   ]],
+  bodyNoH: ['Block', [
+    ['WALL', 'wall thickness', 0.8, 6, 0.1, 'mm'],
+    ['FLOOR', 'floor (0 = none)', 0, 10, 0.2, 'mm'],
+    ['R_OUT', 'corner radius', 0, 40, 0.5, 'mm'],
+  ]],
   body: ['Block', [
     ['MOD_H', 'height', 8, 120, 0.5, 'mm'],
     ['WALL', 'wall thickness', 0.8, 6, 0.1, 'mm'],
@@ -47,6 +52,11 @@ const GROUPS = {
     ['tW', 'max width', 4, 120, 0.5, 'mm'],
     ['tJw', 'head/jaw width', 2, 120, 0.5, 'mm'],
     ['tJl', 'head/jaw length', 5, 300, 1, 'mm'],
+  ]],
+  rack: ['Tool rack', [
+    ['rackPart', 'module (1 = pliers, 2 = cutters)', 1, 2, 1, ''],
+    ['rackH', 'height', 12, 45, 1, 'mm'],
+    ['rackLip', 'front tray depth', 0, 20, 1, 'mm'],
   ]],
   tub: ['Open tub', [
     ['tubW', 'length', 30, 400, 1, 'mm'],
@@ -104,6 +114,14 @@ const PARTS = [
     build: (p) => G.buildTool(p),
     name: (p) => `tool_${Math.round(p.tL)}x${Math.round(p.tW)}`,
     hint: 'Give the tool\'s overall length and its widest part, then the narrower head and how long that head is. The block is the tool plus one wall all round. Set head/jaw width = max width for a plain rectangular well.',
+  },
+  {
+    id: 'rack',
+    label: 'Tool rack — measured tools',
+    groups: ['rack', 'bodyNoH', 'print'],
+    build: (p) => G.buildRack(p),
+    name: (p) => `rack_${Math.round(p.rackPart)}`,
+    hint: 'The five tools off the mat as plain rectangular pockets: pitch = width + wall, nose end flush at the back, and a shallow tray in front of the shorter tools. Module 1 fits a 256 mm bed easily; module 2 also does.',
   },
   {
     id: 'tub',

@@ -44,6 +44,7 @@ need.
 | **A — plier comb** | 152 × 229 × 28 | 5 cradles: 28.4 mm well → shoulder → 18.4 mm jaw channel |
 | **B — drills, tips** | 185 × 229 × 28 | 3 thin slots · open drill-bit tub · 7 solder-tip ribs |
 | **single tool** | tool + 2 × wall | a block wrapped around one measured tool: handle well + narrower jaw channel |
+| **tool rack** | 137 × 168 × 22 / 163 × 118 × 22 | the five measured tools as plain rectangular pockets, sized for a 256 mm bed |
 | **open tub** | 289 × 129 × 18 | plain box for spring tools kept at full extension, with a finger notch |
 | **fit coupon** | 62 × 52 × 28 | corner of A — print this first, ~10 min |
 | **parts tray** | 352 × 212 × 28 | 8 × 5 grid, 42 mm cells, splits into two |
@@ -59,7 +60,7 @@ need.
 - PETG or ASA; PLA is fine for light bits but creeps under a heavy crimper.
 - The pair is ~425 cm³ of model, roughly 150 g printed.
 
-## Traced tools from a photo
+## Traced tools from a photo (measurement only)
 
 For one-offs, photograph the tool on a 1 cm cutting mat and trace it instead of
 guessing numbers:
@@ -70,12 +71,13 @@ node   src/build_tools.mjs                       # -> out/tools/tool_*.stl
 python src/render_stls.py out/tools/tool_*.stl   # -> preview png
 ```
 
-`trace_tools.py` finds the printed grid, fits a homography so 1 unit = 1 cm,
+The generated cups were tried and dropped: a silhouette-following 1.8 mm wall
+is a fragile part and it wastes drawer width. `trace_tools.py` is kept for the
+measurements it produces - those numbers are what `RACK` in `geom.js` is built
+from. `trace_tools.py` finds the printed grid, fits a homography so 1 unit = 1 cm,
 warps the photo top-down, segments everything that is not mat green, and emits
 one outline per tool (shapely buffer for the pocket + wall, so the outline is
-valid rather than a pixel staircase). `build_tools.mjs` extrudes each into a cup
-with a 1.2 mm floor. Thickness is not visible from above — set it in
-`THICKNESS` in `build_tools.mjs`.
+valid rather than a pixel staircase). Thickness is not visible from above - take it from a side photo or a caliper.
 
 ## Running it locally
 

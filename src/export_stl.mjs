@@ -18,6 +18,8 @@ const parts = [
   ['parts_tray_split', G.buildTray(P).geom],
   ['bin_2x2', G.buildBin(P, 2, 2).geom],
   ['tub_spring_tools', G.buildTub(P)],
+  ['rack_1_pliers', G.buildRack({ ...P, rackPart: 1 })],
+  ['rack_2_cutters', G.buildRack({ ...P, rackPart: 2 })],
 ];
 
 for (const [name, geom] of parts) {

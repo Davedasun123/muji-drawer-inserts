@@ -36,6 +36,8 @@ export const DEFAULTS = {
   tipCount: 7, tipPitch: 14.5, tipLen: 70, tipDepth: 11, tipDia: 9, RIB_H: 10,
   // single tool: a module sized around one tool, not around the drawer
   tL: 160, tW: 26, tJw: 16, tJl: 55,
+  // measured tool rack: length, closed width, jaw width, jaw length (mm)
+  rackPart: 1, rackH: 22, rackLip: 8,
   // open tub - loose tools, at whatever width they spring to
   tubW: 289, tubD: 129, tubH: 18, tubWall: 1.8, tubFloor: 1.2, tubR: 4, tubNotch: 40,
   // parts grid
@@ -308,6 +310,56 @@ export function buildTool(P) {
   const c = scoopInside(-w / 2, w / 2, W / 2, rOut(P), yF, zCut, 12, -1);
   if (c) s = booleans.subtract(s, c);
   return s;
+}
+
+/* ------------------------------------------------------------ tool rack */
+
+/** The five tools off the cutting mat, measured. Widths are the closed pose. */
+export const RACK = [
+  [
+    { n: 'combination pliers', L: 154, W: 64, jw: 16, jl: 45 },
+    { n: 'wire stripper', L: 165, W: 64, jw: 20, jl: 50 },
+  ],
+  [
+    { n: 'flush cutter', L: 110, W: 50, jw: 12, jl: 30 },
+    { n: 'needle nose', L: 111, W: 48, jw: 9, jl: 40 },
+    { n: 'side cutter', L: 115, W: 53, jw: 12, jl: 30 },
+  ],
+];
+
+/** One rectilinear block per group: plain rectangular pockets side by side at
+ *  pitch = tool width + wall, noses flush at the back, and the shorter tools
+ *  get a shallow tray in front of them instead of a solid lump of plastic.
+ *  No shoulder - a rectangle is the whole point; the tool rests on the tray
+ *  lip and cannot go anywhere. */
+export function buildRack(P) {
+  const part = Math.max(0, Math.min(RACK.length - 1, Math.round(P.rackPart) - 1));
+  const items = RACK[part];
+  const H = Math.max(10, P.rackH);
+  const zCut = P.FLOOR > 0 ? P.FLOOR : -1;
+  const clear = 1.0;                       // each side
+
+  const W = items.reduce((a, t) => a + t.W + 2 * clear, 0) + (items.length + 1) * P.WALL;
+  const longest = Math.max(...items.map((t) => t.L));
+  const D = longest + 2 * P.WALL;
+
+  let s = slab(W, D, H, Math.min(rOut(P), W / 2 - 0.1, D / 2 - 0.1));
+  const cuts = [];
+  let x = -W / 2 + P.WALL;
+  for (const t of items) {
+    const pw = t.W + 2 * clear;
+    const cx = x + pw / 2;
+    const yB = D / 2 - P.WALL;
+    const yF = yB - t.L;
+    cuts.push(pocket(pw, t.L, cx, (yF + yB) / 2, zCut, H + 1, 3));
+    if (longest - t.L > 6) {                // shallow tray where there is no tool
+      const dd = longest - t.L;
+      cuts.push(pocket(pw, dd - P.WALL, cx, -D / 2 + P.WALL + dd / 2 - P.WALL / 2,
+        H - P.rackLip, H + 1, 2));
+    }
+    x += pw + P.WALL;
+  }
+  return booleans.subtract(s, ...cuts);
 }
 
 /* -------------------------------------------------------------- open tub */
