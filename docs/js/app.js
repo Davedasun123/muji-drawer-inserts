@@ -305,7 +305,12 @@ function build() {
   drawerBox.visible = part.groups.includes('drawer');
 
   const vol = G.volume(geom) / 1000;
-  const mass = vol * 0.35; // ≈ 3 perimeters + 15 % infill, per cm3 of model volume
+  // A part that is mostly air with thin walls prints almost solid; a solid
+  // block with pockets prints mostly infill. Use the model's own solidity to
+  // pick the factor, or the estimate is wrong by 3x on one of the two.
+  const envelope = (b.size[0] * b.size[1] * b.size[2]) / 1000;
+  const solidity = envelope > 0 ? vol / envelope : 0;
+  const mass = vol * 1.24 * (solidity < 0.3 ? 0.95 : 0.45);
   const chk = extra && extra.pieceSize ? extra.pieceSize : b.size;
   const fits = part.noBed || (chk[0] <= P.bedW && chk[1] <= P.bedD);
   const lines = [
