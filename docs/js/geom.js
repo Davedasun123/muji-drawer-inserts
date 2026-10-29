@@ -385,24 +385,24 @@ export function buildRack(P) {
  * drawer. Both tiers are pencilled from current numbers.
  */
 export const STACK_BOTTOM = [
-  { n: 'Crimper', x: 1.6, y: 1.6, w: 194, d: 59, note: 'measured: 190 long, 55 wide, 13 thick' },
-  { n: '3rd cutter', x: 197.6, y: 1.6, w: 112, d: 117, note: 'side cutter, full extension' },
-  { n: '2 cutters, stacked', x: 1.6, y: 62.6, w: 112, d: 117, note: 'needle-nose on flush cutter - 20 mm tall' },
+  { n: '2 cutters, stacked', x: 1.6, y: 1.6, w: 112, d: 117, note: 'needle-nose on flush cutter - 20 mm tall' },
+  { n: 'Crimper', x: 115.6, y: 1.6, w: 194, d: 59, note: 'measured: 190 long, 55 wide, 13 thick' },
   { n: 'Tape measure', x: 115.6, y: 62.6, w: 74, d: 69, note: 'measured: 26 incl. the clip - sets this tier at 27' },
-  { n: 'Screwdrivers', x: 115.6, y: 133.6, w: 145, d: 62, note: 'yellow 140x19 + black 115x17, side by side - 19 mm is why this tier' },
-  { n: 'Swiss army knife', x: 1.6, y: 181.6, w: 101, d: 33, note: 'measured: 95 x 27 x 19' },
+  { n: 'Swiss army knife', x: 191.6, y: 62.6, w: 101, d: 33, note: 'measured: 95 x 27 x 19' },
+  { n: '3rd cutter', x: 191.6, y: 97.6, w: 112, d: 117, note: 'side cutter, full extension' },
+  { n: 'Screwdrivers', x: 1.6, y: 133.6, w: 145, d: 62, note: 'yellow 140x19 + black 115x17, side by side - 19 mm is why this tier' },
 ];
 
 export const STACK_TOP = [
-  { n: 'Flat spanners', x: 1.6, y: 1.6, w: 85, d: 40, note: '6, stacked' },
-  { n: 'Small drivers', x: 88.6, y: 1.6, w: 110, d: 30, note: 'the short ones, stacked' },
-  { n: 'Tweezers', x: 200.6, y: 1.6, w: 130, d: 22, note: '3 pairs, stacked' },
-  { n: 'Flux syringes', x: 200.6, y: 25.6, w: 95, d: 25, note: 'both, stacked' },
-  { n: 'Wire stripper', x: 1.6, y: 43.6, w: 165, d: 68, note: 'closed pose, 16 mm' },
-  { n: 'Drills + hex keys', x: 168.6, y: 52.6, w: 110, d: 25, note: 'tube + 2 L-keys' },
-  { n: 'Probes', x: 168.6, y: 79.6, w: 165, d: 30, note: 'both, stacked' },
-  { n: 'Combination pliers', x: 173.6, y: 111.6, w: 160, d: 68, note: 'closed pose, 15 mm' },
-  { n: 'Side cutter', x: 1.6, y: 113.6, w: 170, d: 67, note: 'blue, 15 mm' },
+  { n: 'Flat spanners', x: 2.0, y: 2.0, w: 85, d: 40, note: '6, stacked' },
+  { n: 'Small drivers', x: 89.0, y: 2.0, w: 110, d: 30, note: 'the short ones, stacked' },
+  { n: 'Tweezers', x: 201.0, y: 2.0, w: 130, d: 22, note: '3 pairs, stacked' },
+  { n: 'Flux syringes', x: 201.0, y: 26.0, w: 95, d: 25, note: 'both, stacked' },
+  { n: 'Wire stripper', x: 2.0, y: 44.0, w: 165, d: 68, note: 'closed pose, 16 mm' },
+  { n: 'Drills + hex keys', x: 169.0, y: 53.0, w: 110, d: 25, note: 'tube + 2 L-keys' },
+  { n: 'Probes', x: 169.0, y: 80.0, w: 165, d: 30, note: 'both, stacked' },
+  { n: 'Combination pliers', x: 174.0, y: 112.0, w: 160, d: 68, note: 'closed pose, 15 mm' },
+  { n: 'Side cutter', x: 2.0, y: 114.0, w: 170, d: 67, note: 'blue, 15 mm' },
 ];
 
 export const STACK_SETS = { 1: STACK_BOTTOM, 2: STACK_TOP };
@@ -478,17 +478,21 @@ export function buildStack(P) {
   const H = P.stackH;
   const cells = STACK_SETS[Math.round(P.stackSet)] || STACK_BOTTOM;
   const { placed, rows, D } = packCells(cells, W, P.WALL);
-  let s = slab(W, D, H, Math.min(rOut(P), 6));
+  // Pocket corners must be as round as the frame corners. If they are not,
+  // the two arcs pinch at 45 deg: with a frame radius of 5 and a pocket radius
+  // of 3 the wall thins from 1.6 to about 1.0, which a slicer will drop.
+  const rFrame = Math.min(rOut(P), 6);
+  let s = slab(W, D, H, rFrame);
   const cuts = [];
   const z0 = P.FLOOR > 0 ? P.FLOOR : -1;
   for (const c of placed) {
     cuts.push(pocket(c.w, c.d, -W / 2 + c.x + c.w / 2, -D / 2 + c.y + c.d / 2,
-      z0, H + 1, 4));
+      z0, H + 1, rFrame));
   }
   // anything the packer could not fill is storage, not a solid block
   for (const r of freeRects(placed, W, D, P.WALL)) {
     cuts.push(pocket(r.w, r.d, -W / 2 + r.x + r.w / 2, -D / 2 + r.y + r.d / 2,
-      z0, H + 1, 3));
+      z0, H + 1, rFrame));
   }
   let tray = booleans.subtract(s, ...cuts);
 
