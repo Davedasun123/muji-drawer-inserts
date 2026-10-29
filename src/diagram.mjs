@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import * as G from '../docs/js/geom.js';
 
 const SET = Number(process.argv[2] || 2);
-const P = { ...G.DEFAULTS, stackH: SET === 3 ? 26 : SET === 4 ? 18 : G.DEFAULTS.stackH };
+const P = { ...G.DEFAULTS, stackH: SET === 3 ? 27 : SET === 4 ? 17 : G.DEFAULTS.stackH };
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const out = join(root, 'out');
 mkdirSync(out, { recursive: true });

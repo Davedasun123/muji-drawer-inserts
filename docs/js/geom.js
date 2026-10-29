@@ -405,24 +405,24 @@ export const STACK_D1 = [
  * drawer. Both tiers are pencilled from current numbers.
  */
 export const STACK_C1 = [
-  { n: '2 cutters, stacked', x: 1.6, y: 1.6, w: 112, d: 117, note: 'needle-nose + flush cutter, one on the other - 20 mm tall' },
-  { n: '3rd cutter', x: 115.2, y: 1.6, w: 112, d: 117, note: 'side cutter, full extension' },
-  { n: 'Tape measure', x: 228.8, y: 1.6, w: 74, d: 69, note: 'on its edge, 25 mm - sets this tier at 26' },
-  { n: 'Crimper', x: 1.6, y: 120.2, w: 248, d: 52, note: 'green, 13 mm thick' },
-  { n: 'Long screwdrivers', x: 1.6, y: 173.8, w: 155, d: 50, note: 'both, stacked' },
+  { n: '2 cutters, stacked', x: 1.6, y: 1.6, w: 112, d: 117, note: 'needle-nose on flush cutter - 20 mm tall' },
+  { n: 'Crimper', x: 115.6, y: 1.6, w: 194, d: 59, note: 'measured: 190 long, 55 wide, 13 thick' },
+  { n: 'Tape measure', x: 115.6, y: 62.6, w: 74, d: 69, note: 'measured: 26 incl. the clip - sets this tier at 27' },
+  { n: '3rd cutter', x: 191.6, y: 62.6, w: 112, d: 117, note: 'side cutter, full extension' },
+  { n: 'Screwdrivers', x: 1.6, y: 133.6, w: 145, d: 62, note: 'yellow 140x19 + black 115x17, side by side - 19 mm is why this tier' },
+  { n: 'Swiss army knife', x: 148.6, y: 181.6, w: 105, d: 32, note: '17 mm' },
 ];
 
 export const STACK_C2 = [
   { n: 'Flat spanners', x: 1.6, y: 1.6, w: 85, d: 40, note: '6, stacked' },
-  { n: 'Drills + hex keys', x: 88.6, y: 1.6, w: 110, d: 25, note: 'tube + 2 L-keys' },
-  { n: 'Swiss army knife', x: 200.6, y: 1.6, w: 105, d: 32, note: '17 mm' },
-  { n: 'Flux syringes', x: 88.6, y: 28.6, w: 95, d: 25, note: 'both, stacked' },
-  { n: 'Tweezers', x: 185.6, y: 35.6, w: 130, d: 22, note: '3 pairs, stacked' },
-  { n: 'Side cutter', x: 1.6, y: 55.6, w: 170, d: 67, note: 'blue, 15 mm' },
-  { n: 'Small drivers', x: 173.6, y: 59.6, w: 110, d: 30, note: 'the short ones, stacked' },
-  { n: 'Combination pliers', x: 173.6, y: 91.6, w: 160, d: 68, note: 'closed pose, 15 mm' },
-  { n: 'Wire stripper', x: 1.6, y: 124.6, w: 165, d: 68, note: 'closed pose, 16 mm' },
-  { n: 'Probes', x: 168.6, y: 161.6, w: 165, d: 30, note: 'both, stacked' },
+  { n: 'Small drivers', x: 88.6, y: 1.6, w: 110, d: 30, note: 'the short ones, stacked' },
+  { n: 'Tweezers', x: 200.6, y: 1.6, w: 130, d: 22, note: '3 pairs, stacked' },
+  { n: 'Flux syringes', x: 200.6, y: 25.6, w: 95, d: 25, note: 'both, stacked' },
+  { n: 'Side cutter', x: 1.6, y: 43.6, w: 170, d: 67, note: 'blue, 15 mm' },
+  { n: 'Drills + hex keys', x: 173.6, y: 52.6, w: 110, d: 25, note: 'tube + 2 L-keys' },
+  { n: 'Combination pliers', x: 173.6, y: 79.6, w: 160, d: 68, note: 'closed pose, 15 mm' },
+  { n: 'Wire stripper', x: 1.6, y: 112.6, w: 165, d: 68, note: 'closed pose, 16 mm' },
+  { n: 'Probes', x: 168.6, y: 149.6, w: 165, d: 30, note: 'both, stacked' },
 ];
 
 export const STACK_SETS = { 1: STACK_D1, 2: STACK_D2, 3: STACK_C1, 4: STACK_C2 };

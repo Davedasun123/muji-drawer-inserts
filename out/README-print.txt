@@ -1,9 +1,9 @@
 Muji 34 x 23 x 4.5 cm drawer - one drawer for all tools, two tiers.
 
 FILES
-  one_drawer_bottom_left.stl   ) tier 1, 26 mm tall, 168.9 x 225.4
+  one_drawer_bottom_left.stl   ) tier 1, 27 mm tall, 168.9 x 215
   one_drawer_bottom_right.stl  ) no floor - the tools sit on the drawer
-  one_drawer_top_left.stl      ) tier 2, 18 mm tall, 168.9 x 194.2
+  one_drawer_top_left.stl      ) tier 2, 17 mm tall, 168.9 x 182
   one_drawer_top_right.stl     ) 1.2 mm floor - it lifts out, so it carries its tools
 
 ORIENTATION
@@ -21,13 +21,13 @@ ORDER
   Then top_left + top_right: they rest on the rims of the bottom tier.
 
 CHECK BEFORE PRINTING THE SECOND PAIR
-  The drawer interior is stated 340 x 230. The tray is 336 x 225.4, so 4 mm of
+  The drawer interior is stated 340 x 230. The tray is 336 x 215, so 4 mm of
   width is all the margin there is. Measure it. If it is 338 or less, tell me
   and I will take 2 mm off the width.
 
 NOT YET VERIFIED (sized by eye off the photo)
-  green crimper    248 x 52
-  long screwdrivers 155 x 50 for the pair stacked
+  green crimper    190 x 55 (measured)
+  long screwdrivers 140x19 + 115x17 side by side
   small drivers     110 x 30
   drill tube        110 x 25
   drawer interior   340 x 230 x 45

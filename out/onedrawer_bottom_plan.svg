@@ -1,60 +1,75 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="924.4" height="935.96" viewBox="0 0 924.4 935.96">
+<svg xmlns="http://www.w3.org/2000/svg" width="924.4" height="932.4799999999999" viewBox="0 0 924.4 932.4799999999999">
 <rect width="100%" height="100%" fill="#ffffff"/>
 <text x="84" y="54" font-family="ui-sans-serif,system-ui,sans-serif" font-size="27" font-weight="700" fill="#1b2431">Bottom tier, 26 mm — where each tool goes</text>
-<text x="84" y="82" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#6c7c93">336 × 225 mm tray in a 340 × 230 drawer · 26 mm walls · two halves, 168 mm each</text>
-<rect x="84" y="118" width="806.4" height="540.96" fill="#f6f8fc" stroke="#2b3546" stroke-width="2.5" rx="4"/>
+<text x="84" y="82" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#6c7c93">336 × 215 mm tray in a 340 × 230 drawer · 27 mm walls · two halves, 168 mm each</text>
+<rect x="84" y="118" width="806.4" height="516.4799999999999" fill="#f6f8fc" stroke="#2b3546" stroke-width="2.5" rx="4"/>
 <rect x="87.8" y="121.8" width="268.8" height="280.8" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
 <text x="97.8" y="153.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">1</text>
 <text x="127.69999999999999" y="149.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">2 CUTTERS, STACKED</text>
 <text x="98.8" y="393.6" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">112 × 117 mm</text>
-<rect x="360.5" y="121.8" width="268.8" height="280.8" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
-<text x="370.5" y="153.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">2</text>
-<text x="400.4" y="149.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">3RD CUTTER</text>
-<text x="371.5" y="393.6" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">112 × 117 mm</text>
-<rect x="633.1" y="121.8" width="177.6" height="165.6" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
-<text x="643.1" y="153.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">3</text>
-<text x="673" y="149.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">TAPE MEASURE</text>
-<text x="644.1" y="278.4" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">74 × 69 mm</text>
-<rect x="87.8" y="406.5" width="595.2" height="124.8" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
-<text x="97.8" y="438.5" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">4</text>
-<text x="127.69999999999999" y="434.5" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">CRIMPER</text>
-<text x="98.8" y="522.3" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">248 × 52 mm</text>
-<rect x="87.8" y="535.1" width="372" height="120" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
-<text x="97.8" y="567.1" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">5</text>
-<text x="127.69999999999999" y="563.1" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">LONG SCREWDRIVERS</text>
-<text x="98.8" y="646.1" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">155 × 50 mm</text>
-<rect x="814.6" y="121.8" width="72" height="169.4" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
-<rect x="633.1" y="291.3" width="253.4" height="115.2" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
-<text x="640.1" y="309.3" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
-<rect x="686.9" y="406.5" width="199.7" height="128.6" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
-<text x="693.9" y="424.5" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
-<rect x="463.7" y="535.1" width="422.9" height="120" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
-<text x="470.7" y="553.1" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
-<line x1="84" y1="688.96" x2="204" y2="688.96" stroke="#2b3546" stroke-width="3"/>
-<text x="214" y="693.96" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#5a687d">50 mm</text>
-<text x="890.4" y="693.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="end" fill="#b0453c">DRAWER FRONT ↓</text>
-<text x="84" y="774.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="17" font-weight="700" fill="#26303f">What goes where</text>
-<rect x="78" y="785.96" width="820.4" height="21" fill="#f4f6fa"/>
-<text x="84" y="800.96" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">1</text>
-<text x="114" y="800.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">2 cutters, stacked</text>
-<text x="294" y="800.96" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">112 × 117 mm</text>
-<text x="414" y="800.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">needle-nose + flush cutter, one on the other - 20 mm tall</text>
-<text x="84" y="821.96" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">2</text>
-<text x="114" y="821.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">3rd cutter</text>
-<text x="294" y="821.96" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">112 × 117 mm</text>
-<text x="414" y="821.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">side cutter, full extension</text>
-<rect x="78" y="827.96" width="820.4" height="21" fill="#f4f6fa"/>
-<text x="84" y="842.96" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">3</text>
-<text x="114" y="842.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Tape measure</text>
-<text x="294" y="842.96" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">74 × 69 mm</text>
-<text x="414" y="842.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">on its edge, 25 mm - sets this tier at 26</text>
-<text x="84" y="863.96" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">4</text>
-<text x="114" y="863.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Crimper</text>
-<text x="294" y="863.96" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">248 × 52 mm</text>
-<text x="414" y="863.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">green, 13 mm thick</text>
-<rect x="78" y="869.96" width="820.4" height="21" fill="#f4f6fa"/>
-<text x="84" y="884.96" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">5</text>
-<text x="114" y="884.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Long screwdrivers</text>
-<text x="294" y="884.96" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">155 × 50 mm</text>
-<text x="414" y="884.96" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">both, stacked</text>
+<rect x="361.4" y="121.8" width="465.6" height="141.6" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="371.4" y="153.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">2</text>
+<text x="401.29999999999995" y="149.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">CRIMPER</text>
+<text x="372.4" y="254.39999999999998" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">194 × 59 mm</text>
+<rect x="361.4" y="268.2" width="177.6" height="165.6" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="371.4" y="300.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">3</text>
+<text x="401.29999999999995" y="296.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">TAPE MEASURE</text>
+<text x="372.4" y="424.79999999999995" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">74 × 69 mm</text>
+<rect x="543.8" y="268.2" width="268.8" height="280.8" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="553.8" y="300.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">4</text>
+<text x="583.6999999999999" y="296.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">3RD CUTTER</text>
+<text x="554.8" y="540" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">112 × 117 mm</text>
+<rect x="87.8" y="438.6" width="348" height="148.8" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="97.8" y="470.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">5</text>
+<text x="127.69999999999999" y="466.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">SCREWDRIVERS</text>
+<text x="98.8" y="578.4000000000001" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">145 × 62 mm</text>
+<rect x="440.6" y="553.8" width="252" height="76.8" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="449.6" y="573.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="700" fill="#26303f">6</text>
+<text x="469.6" y="572.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#37445c">Swiss army knife</text>
+<text x="450.6" y="623.5999999999999" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#7b8aa0">105×32</text>
+<rect x="830.9" y="121.8" width="55.7" height="145.4" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<rect x="816.5" y="268.2" width="70.1" height="138.2" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<rect x="87.8" y="406.5" width="273.6" height="31.2" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="94.8" y="424.5" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<rect x="816.5" y="406.5" width="70.1" height="31.2" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<rect x="439.7" y="438.6" width="104.2" height="114.2" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="446.7" y="456.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<rect x="816.5" y="438.6" width="70.1" height="114.2" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<rect x="696.5" y="553.8" width="190.1" height="37.4" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="703.5" y="571.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<rect x="87.8" y="591.3" width="352.8" height="39.4" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="94.8" y="609.3" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<rect x="696.5" y="591.3" width="190.1" height="39.4" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="703.5" y="609.3" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<line x1="84" y1="664.4799999999999" x2="204" y2="664.4799999999999" stroke="#2b3546" stroke-width="3"/>
+<text x="214" y="669.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#5a687d">50 mm</text>
+<text x="890.4" y="669.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="end" fill="#b0453c">DRAWER FRONT ↓</text>
+<text x="84" y="750.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="17" font-weight="700" fill="#26303f">What goes where</text>
+<rect x="78" y="761.4799999999999" width="820.4" height="21" fill="#f4f6fa"/>
+<text x="84" y="776.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">1</text>
+<text x="114" y="776.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">2 cutters, stacked</text>
+<text x="294" y="776.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">112 × 117 mm</text>
+<text x="414" y="776.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">needle-nose on flush cutter - 20 mm tall</text>
+<text x="84" y="797.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">2</text>
+<text x="114" y="797.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Crimper</text>
+<text x="294" y="797.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">194 × 59 mm</text>
+<text x="414" y="797.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">measured: 190 long, 55 wide, 13 thick</text>
+<rect x="78" y="803.4799999999999" width="820.4" height="21" fill="#f4f6fa"/>
+<text x="84" y="818.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">3</text>
+<text x="114" y="818.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Tape measure</text>
+<text x="294" y="818.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">74 × 69 mm</text>
+<text x="414" y="818.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">measured: 26 incl. the clip - sets this tier at 27</text>
+<text x="84" y="839.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">4</text>
+<text x="114" y="839.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">3rd cutter</text>
+<text x="294" y="839.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">112 × 117 mm</text>
+<text x="414" y="839.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">side cutter, full extension</text>
+<rect x="78" y="845.4799999999999" width="820.4" height="21" fill="#f4f6fa"/>
+<text x="84" y="860.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">5</text>
+<text x="114" y="860.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Screwdrivers</text>
+<text x="294" y="860.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">145 × 62 mm</text>
+<text x="414" y="860.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">yellow 140x19 + black 115x17, side by side - 19 mm is why this tier</text>
+<text x="84" y="881.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">6</text>
+<text x="114" y="881.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Swiss army knife</text>
+<text x="294" y="881.4799999999999" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">105 × 32 mm</text>
+<text x="414" y="881.4799999999999" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">17 mm</text>
 </svg>
