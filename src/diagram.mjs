@@ -32,7 +32,8 @@ const STATUS = {
 };
 const MARK = { measured: ['#2f7d4f', '✓'], check: ['#b0453c', '?'] };
 const { placed, D } = G.packCells(CELLS, P.stackW, P.WALL);
-const cells = [...placed].sort((a, b) => (a.y - b.y) || (a.x - b.x));
+// number them in reading order of the picture, which is bottom-up in model y
+const cells = [...placed].sort((a, b) => ((D - b.y - b.d) - (D - a.y - a.d)) || (a.x - b.x));
 
 const S = 2.4;                       // px per mm
 const ML = 84; const MT = 118; const GAP = 108;
@@ -71,7 +72,9 @@ if (dd - D < 70 && dd - D > 25) {
 parts.push(`<rect x="${ML}" y="${MT}" width="${planW}" height="${planH}" fill="#f6f8fc" stroke="#2b3546" stroke-width="2.5" rx="4"/>`);
 
 cells.forEach((c, i) => {
-  const x = ML + px(c.x); const y = MT + px(c.y);
+  // model +y runs away from the viewer, and the slicer draws it upward, so a
+  // cell at y = 0 belongs at the bottom of the page - not the top
+  const x = ML + px(c.x); const y = MT + px(D - c.y - c.d);
   const w = px(c.w); const h = px(c.d);
   parts.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>`);
 
@@ -109,7 +112,7 @@ cells.forEach((c, i) => {
 });
 
 for (const r of G.freeRects(placed, P.stackW, D, P.WALL)) {
-  const x = ML + px(r.x); const y = MT + px(r.y);
+  const x = ML + px(r.x); const y = MT + px(D - r.y - r.d);
   parts.push(`<rect x="${x}" y="${y}" width="${px(r.w)}" height="${px(r.d)}" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>`);
   if (r.w > 30 && r.d > 12) parts.push(T(x + 7, y + 18, 'spare', { size: 12, fill: '#97a2b2' }));
 }
@@ -117,7 +120,7 @@ for (const r of G.freeRects(placed, P.stackW, D, P.WALL)) {
 // scale, front marker
 parts.push(`<line x1="${ML}" y1="${MT + planH + 30}" x2="${ML + px(50)}" y2="${MT + planH + 30}" stroke="#2b3546" stroke-width="3"/>`);
 parts.push(T(ML + px(50) + 10, MT + planH + 35, '50 mm', { size: 12, mono: true, fill: '#5a687d' }));
-parts.push(T(width - 34, MT + planH + 35, 'DRAWER FRONT ↓', { size: 14, weight: 700, fill: '#b0453c', anchor: 'end' }));
+parts.push(T(width - 34, MT + planH + 35, 'Y = 0 — drawer front ↓', { size: 14, weight: 700, fill: '#b0453c', anchor: 'end' }));
 
 // legend
 const ly = MT + planH + GAP + 8;
