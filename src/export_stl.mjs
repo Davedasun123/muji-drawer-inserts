@@ -26,8 +26,9 @@ const parts = [
   ['drawer2_right', G.buildStack({ ...P, stackSet: 2, stackHalf: 2 })],
   ['one_drawer_bottom_left', G.buildStack({ ...P, stackSet: 3, stackH: 26, stackHalf: 1 })],
   ['one_drawer_bottom_right', G.buildStack({ ...P, stackSet: 3, stackH: 26, stackHalf: 2 })],
-  ['one_drawer_top_left', G.buildStack({ ...P, stackSet: 4, stackH: 18, stackHalf: 1 })],
-  ['one_drawer_top_right', G.buildStack({ ...P, stackSet: 4, stackH: 18, stackHalf: 2 })],
+  // the top tier gets a floor: it is lifted out, so it has to carry its tools
+  ['one_drawer_top_left', G.buildStack({ ...P, FLOOR: 1.2, stackSet: 4, stackH: 18, stackHalf: 1 })],
+  ['one_drawer_top_right', G.buildStack({ ...P, FLOOR: 1.2, stackSet: 4, stackH: 18, stackHalf: 2 })],
 ];
 
 for (const [name, geom] of parts) {
