@@ -691,8 +691,35 @@ export function bounds(geom) {
 }
 
 /** binary STL, written by hand so the site needs no serializer dependency */
+/** Drop everything that is not part of the biggest connected body. A pocket
+ *  corner that stops a hair short of its neighbour leaves a few cubic
+ *  millimetres of material hanging in mid-air; a slicer shows it as a floating
+ *  triangle and prints a loose blob. */
+function largestBody(tris) {
+  const key = (v) => `${Math.round(v[0] * 100)},${Math.round(v[1] * 100)},${Math.round(v[2] * 100)}`;
+  const parent = tris.map((_, i) => i);
+  const find = (i) => { while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; } return i; };
+  const join = (a, b) => { const ra = find(a); const rb = find(b); if (ra !== rb) parent[rb] = ra; };
+  const owner = new Map();
+  tris.forEach((t, i) => {
+    for (const v of t) {
+      const k = key(v);
+      if (owner.has(k)) join(owner.get(k), i); else owner.set(k, i);
+    }
+  });
+  const groups = new Map();
+  tris.forEach((_, i) => {
+    const r = find(i);
+    if (!groups.has(r)) groups.set(r, []);
+    groups.get(r).push(i);
+  });
+  let best = null;
+  for (const g of groups.values()) if (!best || g.length > best.length) best = g;
+  return best.map((i) => tris[i]);
+}
+
 export function toSTL(geom) {
-  const tris = triangles(geom);
+  const tris = largestBody(triangles(geom));
   const buf = new ArrayBuffer(84 + tris.length * 50);
   const view = new DataView(buf);
   view.setUint32(80, tris.length, true);
