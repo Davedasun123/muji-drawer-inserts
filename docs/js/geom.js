@@ -417,9 +417,13 @@ export function freeRects(placed, W, D, wall) {
     const y0 = ys[i]; const y1 = ys[i + 1];
     if (y1 - y0 < 8) continue;
     let x = wall;
+    // the spare region runs into its neighbouring cells by half a millimetre
+    // instead of leaving a divider: two walls back to back is material spent
+    // separating a tool from empty air
+    const bite = 0.5;
     const spans = placed
       .filter((c) => c.y < y1 && y0 < c.y + c.d)
-      .map((c) => [c.x, c.x + c.w + wall]).sort((a, b) => a[0] - b[0]);
+      .map((c) => [c.x - bite, c.x + c.w + bite]).sort((a, b) => a[0] - b[0]);
     for (const [a, b] of spans) {
       if (a - x > 12) out.push({ x, y: y0, w: a - x, d: y1 - y0 });
       x = Math.max(x, b);

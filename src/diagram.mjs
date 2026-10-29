@@ -111,7 +111,8 @@ cells.forEach((c, i) => {
   }
 });
 
-for (const r of G.freeRects(placed, P.stackW, D, P.WALL)) {
+// spare regions are merged into their neighbouring cells now, not drawn
+for (const r of []) {
   const x = ML + px(r.x); const y = MT + px(D - r.y - r.d);
   parts.push(`<rect x="${x}" y="${y}" width="${px(r.w)}" height="${px(r.d)}" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>`);
   if (r.w > 30 && r.d > 12) parts.push(T(x + 7, y + 18, 'spare', { size: 12, fill: '#97a2b2' }));
