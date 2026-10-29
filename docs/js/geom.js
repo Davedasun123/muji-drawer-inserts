@@ -496,8 +496,13 @@ export function buildStack(P) {
   // halves that butt together in the drawer
   const half = Math.round(P.stackHalf);
   if (half >= 1) {
-    const box = primitives.cuboid({ size: [W / 2 + 2, D + 20, H * 4],
-      center: [half === 1 ? -W / 4 - 0.075 : W / 4 + 0.075, 0, H * 2] });
+    // keep 0.075 mm off the centreline so the halves butt with a hair of
+    // clearance instead of interfering; the outer edge runs way past the part
+    const c = 0.075;
+    const x0 = half === 1 ? -W / 2 - 2 : c;
+    const x1 = half === 1 ? -c : W / 2 + 2;
+    const box = primitives.cuboid({ size: [x1 - x0, D + 20, H * 4],
+      center: [(x0 + x1) / 2, 0, H * 2] });
     tray = booleans.intersect(tray, box);
   }
   return tray;
