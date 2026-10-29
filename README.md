@@ -19,7 +19,15 @@ workbench — in **one drawer, two tiers**:
 256 mm bed. The top tier has a 1.2 mm floor — it lifts out, so it has to carry
 its tools. The bottom tier is floorless; the tools sit on the drawer.
 
+The bottom tier is bare walls — no floor, it sits on the drawer. The top tier has
+a 1.2 mm floor and lifts out.
+
 Print files: `out/one_drawer_print_files.zip`, plans: `out/onedrawer_*_plan.svg`.
+
+Note on the split: the bottom-left half was printed from an earlier export that
+ran 0.92 mm past the centreline, so `one_drawer_bottom_right.stl` is cut to start
+at x = +0.92 (167.08 mm wide) to butt against it. The top tier halves are on the
+normal centreline with a 0.15 mm seam.
 
 ## Regenerating
 
@@ -44,9 +52,9 @@ screwdriver 115 × 17, six flat spanners, two probes, three spring cutters at fu
 extension (107, 85, 81 wide).
 
 Still guesses: the two small black drivers (110 × 30), the drill tube (110 × 25),
-the flux syringes (95 × 25), the tweezers stack (130 × 22), and the drawer
-interior itself (assumed 340 × 230 × 45 — the tray is 336 wide, so 4 mm of margin
-is the whole budget).
+the flux syringes (95 × 25) and the tweezers stack (130 × 22). The drawer
+interior is confirmed 340 wide (user measured it), so the 336 mm tray keeps 4 mm
+of margin.
 
 ## The rest of the generator
 
