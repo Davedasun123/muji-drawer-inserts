@@ -20,32 +20,32 @@
 <text x="574.4" y="199.4" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="700" fill="#26303f">4</text>
 <text x="594.4" y="198.4" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#37445c">Flux syringes</text>
 <text x="575.4" y="232.4" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#7b8aa0">95×25</text>
-<rect x="87.8" y="222.6" width="408" height="160.8" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<rect x="87.8" y="222.6" width="396" height="163.2" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
 <text x="97.8" y="254.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">5</text>
-<text x="127.69999999999999" y="250.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">SIDE CUTTER</text>
-<text x="98.8" y="374.4" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">170 × 67 mm</text>
-<rect x="500.6" y="244.2" width="264" height="60" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
-<text x="509.6" y="264.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="700" fill="#26303f">6</text>
-<text x="529.6" y="263.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#37445c">Drills + hex keys</text>
-<text x="510.6" y="297.2" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#7b8aa0">110×25</text>
-<rect x="500.6" y="309" width="384" height="163.2" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
-<text x="510.6" y="341" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">7</text>
-<text x="540.5" y="337" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">COMBINATION PLIERS</text>
-<text x="511.6" y="463.2" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">160 × 68 mm</text>
-<rect x="87.8" y="388.2" width="396" height="163.2" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
-<text x="97.8" y="420.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">8</text>
-<text x="127.69999999999999" y="416.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">WIRE STRIPPER</text>
-<text x="98.8" y="542.4" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">165 × 68 mm</text>
-<rect x="488.6" y="477" width="396" height="72" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
-<text x="497.6" y="497" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="700" fill="#26303f">9</text>
-<text x="517.6" y="496" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#37445c">Probes</text>
-<text x="498.6" y="542" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#7b8aa0">165×30</text>
+<text x="127.69999999999999" y="250.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">WIRE STRIPPER</text>
+<text x="98.8" y="376.79999999999995" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">165 × 68 mm</text>
+<rect x="488.6" y="244.2" width="264" height="60" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="497.6" y="264.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="700" fill="#26303f">6</text>
+<text x="517.6" y="263.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#37445c">Drills + hex keys</text>
+<text x="498.6" y="297.2" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#7b8aa0">110×25</text>
+<rect x="488.6" y="309" width="396" height="72" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="497.6" y="329" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="700" fill="#26303f">7</text>
+<text x="517.6" y="328" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#37445c">Probes</text>
+<text x="498.6" y="374" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#7b8aa0">165×30</text>
+<rect x="500.6" y="385.8" width="384" height="163.2" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="510.6" y="417.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">8</text>
+<text x="540.5" y="413.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">COMBINATION PLIERS</text>
+<text x="511.6" y="540" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">160 × 68 mm</text>
+<rect x="87.8" y="390.6" width="408" height="160.8" fill="#e4ebf6" stroke="#2b3546" stroke-width="1.6" rx="3"/>
+<text x="97.8" y="422.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">9</text>
+<text x="127.69999999999999" y="418.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">SIDE CUTTER</text>
+<text x="98.8" y="542.4000000000001" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">170 × 67 mm</text>
 <rect x="295.7" y="197.7" width="269.8" height="24" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
 <rect x="797.3" y="197.7" width="89.3" height="24" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
-<rect x="499.7" y="222.6" width="65.8" height="20.6" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<rect x="487.7" y="222.6" width="77.8" height="20.6" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
 <rect x="797.3" y="222.6" width="89.3" height="20.6" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
-<rect x="768.5" y="244.2" width="118.1" height="63.8" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
-<text x="775.5" y="262.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<rect x="756.5" y="244.2" width="130.1" height="63.8" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="763.5" y="262.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
 <line x1="84" y1="585.28" x2="204" y2="585.28" stroke="#2b3546" stroke-width="3"/>
 <text x="214" y="590.28" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#5a687d">50 mm</text>
 <text x="890.4" y="590.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="end" fill="#b0453c">DRAWER FRONT ↓</text>
@@ -70,25 +70,25 @@
 <text x="414" y="760.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">both, stacked</text>
 <rect x="78" y="766.28" width="820.4" height="21" fill="#f4f6fa"/>
 <text x="84" y="781.28" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">5</text>
-<text x="114" y="781.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Side cutter</text>
-<text x="294" y="781.28" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">170 × 67 mm</text>
-<text x="414" y="781.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">blue, 15 mm</text>
+<text x="114" y="781.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Wire stripper</text>
+<text x="294" y="781.28" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">165 × 68 mm</text>
+<text x="414" y="781.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">closed pose, 16 mm</text>
 <text x="84" y="802.28" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">6</text>
 <text x="114" y="802.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Drills + hex keys</text>
 <text x="294" y="802.28" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">110 × 25 mm</text>
 <text x="414" y="802.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">tube + 2 L-keys</text>
 <rect x="78" y="808.28" width="820.4" height="21" fill="#f4f6fa"/>
 <text x="84" y="823.28" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">7</text>
-<text x="114" y="823.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Combination pliers</text>
-<text x="294" y="823.28" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">160 × 68 mm</text>
-<text x="414" y="823.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">closed pose, 15 mm</text>
+<text x="114" y="823.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Probes</text>
+<text x="294" y="823.28" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">165 × 30 mm</text>
+<text x="414" y="823.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">both, stacked</text>
 <text x="84" y="844.28" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">8</text>
-<text x="114" y="844.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Wire stripper</text>
-<text x="294" y="844.28" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">165 × 68 mm</text>
-<text x="414" y="844.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">closed pose, 16 mm</text>
+<text x="114" y="844.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Combination pliers</text>
+<text x="294" y="844.28" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">160 × 68 mm</text>
+<text x="414" y="844.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">closed pose, 15 mm</text>
 <rect x="78" y="850.28" width="820.4" height="21" fill="#f4f6fa"/>
 <text x="84" y="865.28" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#26303f">9</text>
-<text x="114" y="865.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Probes</text>
-<text x="294" y="865.28" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">165 × 30 mm</text>
-<text x="414" y="865.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">both, stacked</text>
+<text x="114" y="865.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#26303f">Side cutter</text>
+<text x="294" y="865.28" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#7b8aa0">170 × 67 mm</text>
+<text x="414" y="865.28" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#6c7c93">blue, 15 mm</text>
 </svg>
