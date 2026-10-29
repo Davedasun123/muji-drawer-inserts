@@ -17,8 +17,8 @@ const parts = [
   // x = +0.92; this right half starts there so the pair still makes 336 mm
   ['one_drawer_bottom_right', G.buildStack({ ...P, stackSet: 1, stackH: 27, stackHalf: 2, stackSeam: 0.845 })],
   // the top tier gets a floor: it is lifted out, so it has to carry its tools
-  ['one_drawer_top_left', G.buildStack({ ...P, FLOOR: 1.2, WALL: 2.0, stackSet: 2, stackH: 17, stackHalf: 1 })],
-  ['one_drawer_top_right', G.buildStack({ ...P, FLOOR: 1.2, WALL: 2.0, stackSet: 2, stackH: 17, stackHalf: 2 })],
+  ['one_drawer_top_left', G.buildStack({ ...P, FLOOR: 1.2, WALL: 2.0, stackSet: 2, stackH: 17, stackHalf: 1, stackBite: 0.5 })],
+  ['one_drawer_top_right', G.buildStack({ ...P, FLOOR: 1.2, WALL: 2.0, stackSet: 2, stackH: 17, stackHalf: 2, stackBite: 0.5 })],
 ];
 
 for (const [name, geom] of parts) {

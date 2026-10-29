@@ -408,7 +408,7 @@ export const STACK_TOP = [
 export const STACK_SETS = { 1: STACK_BOTTOM, 2: STACK_TOP };
 
 /** The rectangles left over once the cells are placed, as horizontal bands. */
-export function freeRects(placed, W, D, wall) {
+export function freeRects(placed, W, D, wall, bite = 0) {
   const ys = [...new Set([wall, D - wall,
     ...placed.map((c) => c.y), ...placed.map((c) => c.y + c.d + wall)])]
     .filter((y) => y >= wall && y <= D - wall).sort((a, b) => a - b);
@@ -417,18 +417,21 @@ export function freeRects(placed, W, D, wall) {
     const y0 = ys[i]; const y1 = ys[i + 1];
     if (y1 - y0 < 8) continue;
     let x = wall;
-    // the spare region runs into its neighbouring cells by half a millimetre
-    // instead of leaving a divider: two walls back to back is material spent
-    // separating a tool from empty air
-    const bite = 0.5;
     const spans = placed
       .filter((c) => c.y < y1 && y0 < c.y + c.d)
-      .map((c) => [c.x - bite, c.x + c.w + bite]).sort((a, b) => a[0] - b[0]);
+      .map((c) => [c.x, c.x + c.w + wall]).sort((a, b) => a[0] - b[0]);
     for (const [a, b] of spans) {
-      if (a - x > 12) out.push({ x, y: y0, w: a - x, d: y1 - y0 });
+      // bite > 0 lets the spare run into its neighbour instead of leaving a
+      // divider between a tool's cell and empty air
+      const growL = bite && x > wall ? bite : 0;
+      const growR = bite && a < W - wall ? bite : 0;
+      if (a - x > 12) out.push({ x: x - growL, y: y0, w: a - x + growL + growR, d: y1 - y0 });
       x = Math.max(x, b);
     }
-    if (W - wall - x > 12) out.push({ x, y: y0, w: W - wall - x, d: y1 - y0 });
+    if (W - wall - x > 12) {
+      const growL = bite && x > wall ? bite : 0;
+      out.push({ x: x - growL, y: y0, w: W - wall - x + growL, d: y1 - y0 });
+    }
   }
   return out;
 }
@@ -494,7 +497,7 @@ export function buildStack(P) {
       z0, H + 1, rFrame));
   }
   // anything the packer could not fill is storage, not a solid block
-  for (const r of freeRects(placed, W, D, P.WALL)) {
+  for (const r of freeRects(placed, W, D, P.WALL, P.stackBite || 0)) {
     cuts.push(pocket(r.w, r.d, -W / 2 + r.x + r.w / 2, -D / 2 + r.y + r.d / 2,
       z0, H + 1, rFrame));
   }

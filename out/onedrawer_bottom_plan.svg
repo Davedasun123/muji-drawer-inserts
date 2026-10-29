@@ -27,6 +27,19 @@
 <text x="553.8" y="153.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700" fill="#26303f">6</text>
 <text x="583.6999999999999" y="149.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#37445c">3RD CUTTER</text>
 <text x="554.8" y="393.6" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#7b8aa0">112 × 117 mm</text>
+<rect x="830.9" y="487.6" width="55.7" height="145.4" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<rect x="790.1" y="403.6" width="96.5" height="83" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="797.1" y="421.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<rect x="816.5" y="348.4" width="70.1" height="54.2" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<rect x="87.8" y="317.2" width="273.6" height="31.2" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="94.8" y="335.2" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<rect x="816.5" y="317.2" width="70.1" height="31.2" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<rect x="439.7" y="163.6" width="104.2" height="152.6" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="446.7" y="181.6" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<rect x="816.5" y="163.6" width="70.1" height="152.6" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<rect x="87.8" y="121.8" width="456" height="41.8" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
+<text x="94.8" y="139.8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#97a2b2">spare</text>
+<rect x="816.5" y="121.8" width="70.1" height="41.8" fill="#eef1f5" stroke="#a7b3c4" stroke-width="1.2" stroke-dasharray="6 4" rx="3"/>
 <line x1="84" y1="666.88" x2="204" y2="666.88" stroke="#2b3546" stroke-width="3"/>
 <text x="214" y="671.88" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#5a687d">50 mm</text>
 <text x="890.4" y="671.88" font-family="ui-sans-serif,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="end" fill="#b0453c">Y = 0 — drawer front ↓</text>
