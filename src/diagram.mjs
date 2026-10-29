@@ -6,16 +6,14 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as G from '../docs/js/geom.js';
 
-const SET = Number(process.argv[2] || 2);
-const P = { ...G.DEFAULTS, stackH: SET === 3 ? 27 : SET === 4 ? 17 : G.DEFAULTS.stackH };
+const SET = Number(process.argv[2] || 1);
+const P = { ...G.DEFAULTS, stackH: SET === 2 ? 17 : 27 };
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const out = join(root, 'out');
 mkdirSync(out, { recursive: true });
 
-const CELLS = G.STACK_SETS[SET] || G.STACK_D2;
-const NAME = SET === 3 ? 'bottom tier, 26 mm'
-  : SET === 4 ? 'top tier, 18 mm'
-    : `drawer ${SET}`;
+const CELLS = G.STACK_SETS[SET] || G.STACK_BOTTOM;
+const NAME = SET === 2 ? 'top tier, 17 mm' : 'bottom tier, 27 mm';
 const SHEET = process.argv[3] === 'measure';
 // what the numbers in each cell are based on: measured off the photo, or read
 // by eye from the grid / guessed from the photo's proportions
@@ -155,8 +153,7 @@ ${T(ML, 82, SHEET ? `${P.stackW} × ${D.toFixed(0)} mm tray so far · cells mark
 ${parts.join('\n')}
 </svg>`;
 
-const file = SHEET ? `drawer${SET}_measure.svg`
-  : SET === 3 ? 'onedrawer_bottom_plan.svg'
-    : SET === 4 ? 'onedrawer_top_plan.svg' : `drawer${SET}_plan.svg`;
+const file = SHEET ? `tier${SET}_measure.svg`
+  : SET === 2 ? 'onedrawer_top_plan.svg' : 'onedrawer_bottom_plan.svg';
 writeFileSync(join(out, file), svg);
 console.log(`wrote out/${file} ${width} x ${height}`);

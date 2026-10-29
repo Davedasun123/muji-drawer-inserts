@@ -39,7 +39,7 @@ export const DEFAULTS = {
   // measured tool rack: length, closed width, jaw width, jaw length (mm)
   rackPart: 1, rackH: 22, rackLip: 8,
   // challenge drawer: one compartment per tool family, sized to stack
-  stackW: 336, stackD: 224, stackH: 20, stackHalf: 1, stackSet: 2,
+  stackW: 336, stackD: 224, stackH: 27, stackHalf: 1, stackSet: 1,
   // open tub - loose tools, at whatever width they spring to
   tubW: 289, tubD: 129, tubH: 18, tubWall: 1.8, tubFloor: 1.2, tubR: 4, tubNotch: 40,
   // parts grid
@@ -375,36 +375,16 @@ export function buildRack(P) {
  * so nothing needs a second tray. Re-pack with `node src/pack_search.mjs` after
  * changing any size.
  */
-export const STACK_D2 = [
-  { n: 'Side cutter', x: 1.6, y: 1.6, w: 170, d: 67, note: 'blue, 166 mm - alone, 15 mm thick' },
-  { n: 'Long screwdrivers', x: 173.6, y: 1.6, w: 155, d: 50, note: 'both, stacked on each other' },
-  { n: 'Small drivers', x: 173.6, y: 53.6, w: 110, d: 30, note: 'the short ones, stacked' },
-  { n: 'Probes', x: 1.6, y: 70.6, w: 165, d: 30, note: 'both steel ones, stacked' },
-  { n: 'Tape measure', x: 251.6, y: 85.6, w: 74, d: 69, note: '70 × 65 - on its edge' },
-  { n: 'Crimper', x: 1.6, y: 102.6, w: 248, d: 52, note: 'green, 244 mm long - alone, 13 mm thick' },
-  { n: 'Tweezers', x: 1.6, y: 156.6, w: 130, d: 22, note: '3 pairs, stacked - 6 mm' },
-  { n: 'Drills + hex keys', x: 133.6, y: 156.6, w: 110, d: 25, note: 'drill tube + 2 L-keys' },
-  { n: 'Flat spanners', x: 245.6, y: 156.6, w: 85, d: 40, note: '6 stamped, stacked - 9 mm total' },
-  { n: 'Swiss army knife', w: 101, d: 33, note: 'measured: 95 x 27 x 19' },
-  { n: 'Flux syringes', x: 108.6, y: 183.6, w: 95, d: 25, note: 'both, stacked' },
-];
-
 /** Drawer 1: the five pliers off the first photo. The three that spring open
  *  share one open tub at full extension; the two that stay closed get a
  *  rectangular pocket each. */
-export const STACK_D1 = [
-  { n: 'Spring cutters', w: 289, d: 129, note: 'flush cutter + needle-nose + side cutter, at full extension' },
-  { n: 'Combination pliers', w: 165, d: 64, note: 'closed pose, lies across the drawer' },
-  { n: 'Wire stripper', w: 165, d: 64, note: 'closed pose, lies across the drawer' },
-];
-
 /* ---- one drawer for everything (5 pliers + 20 bench tools) -------------
  * Measured tool area is ~111 000 mm2 and one drawer floor is 77 000 mm2, so
  * it only goes in as two tiers: 26 mm at the bottom for anything thick, 16 mm
  * on top for the thin families, which leaves 3 mm of headroom in a 45 mm
  * drawer. Both tiers are pencilled from current numbers.
  */
-export const STACK_C1 = [
+export const STACK_BOTTOM = [
   { n: 'Crimper', x: 1.6, y: 1.6, w: 194, d: 59, note: 'measured: 190 long, 55 wide, 13 thick' },
   { n: '3rd cutter', x: 197.6, y: 1.6, w: 112, d: 117, note: 'side cutter, full extension' },
   { n: '2 cutters, stacked', x: 1.6, y: 62.6, w: 112, d: 117, note: 'needle-nose on flush cutter - 20 mm tall' },
@@ -413,7 +393,7 @@ export const STACK_C1 = [
   { n: 'Swiss army knife', x: 1.6, y: 181.6, w: 101, d: 33, note: 'measured: 95 x 27 x 19' },
 ];
 
-export const STACK_C2 = [
+export const STACK_TOP = [
   { n: 'Flat spanners', x: 1.6, y: 1.6, w: 85, d: 40, note: '6, stacked' },
   { n: 'Small drivers', x: 88.6, y: 1.6, w: 110, d: 30, note: 'the short ones, stacked' },
   { n: 'Tweezers', x: 200.6, y: 1.6, w: 130, d: 22, note: '3 pairs, stacked' },
@@ -425,7 +405,7 @@ export const STACK_C2 = [
   { n: 'Side cutter', x: 1.6, y: 113.6, w: 170, d: 67, note: 'blue, 15 mm' },
 ];
 
-export const STACK_SETS = { 1: STACK_D1, 2: STACK_D2, 3: STACK_C1, 4: STACK_C2 };
+export const STACK_SETS = { 1: STACK_BOTTOM, 2: STACK_TOP };
 
 /** The rectangles left over once the cells are placed, as horizontal bands. */
 export function freeRects(placed, W, D, wall) {
@@ -496,7 +476,7 @@ export function packCells(cells, W, wall) {
 export function buildStack(P) {
   const W = P.stackW;
   const H = P.stackH;
-  const cells = STACK_SETS[Math.round(P.stackSet)] || STACK_D2;
+  const cells = STACK_SETS[Math.round(P.stackSet)] || STACK_BOTTOM;
   const { placed, rows, D } = packCells(cells, W, P.WALL);
   let s = slab(W, D, H, Math.min(rOut(P), 6));
   const cuts = [];

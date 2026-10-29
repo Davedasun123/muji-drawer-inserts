@@ -1,12 +1,12 @@
 /* Re-pack a drawer cell list as tightly as possible.
- *   node src/pack_search.mjs        -> prints a STACK_D2 block to paste back
+ *   node src/pack_search.mjs 1      -> re-pack the bottom tier and print the block
  * Cells that already carry x/y are stripped first, so this is safe to re-run.
  */
 import * as G from '../docs/js/geom.js';
 
 const P = { ...G.DEFAULTS };
 const W = P.stackW; const wall = P.WALL; const inner = W - 2 * wall;
-const SET = Number(process.argv[2] || 2);
+const SET = Number(process.argv[2] || 1);
 const cells = G.STACK_SETS[SET].map(({ n, w, d, note }) => ({ n, w, d, note }));
 
 function pack(order) {
@@ -42,7 +42,7 @@ for (let i = 0; i < ITER; i++) {
 const sorted = best.placed.sort((a, b) => (a.y - b.y) || (a.x - b.x));
 const used = sorted.reduce((a, c) => a + c.w * c.d, 0);
 console.log(`// ${(100 * used / (W * best.D)).toFixed(0)}% fill, ${best.D.toFixed(0)} mm deep\n`);
-console.log(`export const STACK_SET_${SET} = [`);
+console.log(`export const STACK_${SET === 1 ? 'BOTTOM' : 'TOP'} = [`);
 for (const c of sorted) {
   console.log(`  { n: '${c.n}', x: ${c.x.toFixed(1)}, y: ${c.y.toFixed(1)}, w: ${c.w}, d: ${c.d}, note: '${c.note}' },`);
 }

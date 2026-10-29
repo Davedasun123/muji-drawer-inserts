@@ -12,23 +12,11 @@ mkdirSync(out, { recursive: true });
 const P = { ...G.DEFAULTS };
 
 const parts = [
-  ['A_plier_comb', G.buildA(P)],
-  ['B_bits_tips_tub', G.buildB(P)],
-  ['fit_coupon', G.buildCoupon(P)],
-  ['parts_tray_split', G.buildTray(P).geom],
-  ['bin_2x2', G.buildBin(P, 2, 2).geom],
-  ['tub_spring_tools', G.buildTub(P)],
-  ['rack_1_pliers', G.buildRack({ ...P, rackPart: 1 })],
-  ['rack_2_cutters', G.buildRack({ ...P, rackPart: 2 })],
-  ['drawer1_left', G.buildStack({ ...P, stackSet: 1, stackHalf: 1 })],
-  ['drawer1_right', G.buildStack({ ...P, stackSet: 1, stackHalf: 2 })],
-  ['drawer2_left', G.buildStack({ ...P, stackSet: 2, stackHalf: 1 })],
-  ['drawer2_right', G.buildStack({ ...P, stackSet: 2, stackHalf: 2 })],
-  ['one_drawer_bottom_left', G.buildStack({ ...P, stackSet: 3, stackH: 27, stackHalf: 1 })],
-  ['one_drawer_bottom_right', G.buildStack({ ...P, stackSet: 3, stackH: 27, stackHalf: 2 })],
+  ['one_drawer_bottom_left', G.buildStack({ ...P, stackSet: 1, stackH: 27, stackHalf: 1 })],
+  ['one_drawer_bottom_right', G.buildStack({ ...P, stackSet: 1, stackH: 27, stackHalf: 2 })],
   // the top tier gets a floor: it is lifted out, so it has to carry its tools
-  ['one_drawer_top_left', G.buildStack({ ...P, FLOOR: 1.2, stackSet: 4, stackH: 17, stackHalf: 1 })],
-  ['one_drawer_top_right', G.buildStack({ ...P, FLOOR: 1.2, stackSet: 4, stackH: 17, stackHalf: 2 })],
+  ['one_drawer_top_left', G.buildStack({ ...P, FLOOR: 1.2, stackSet: 2, stackH: 17, stackHalf: 1 })],
+  ['one_drawer_top_right', G.buildStack({ ...P, FLOOR: 1.2, stackSet: 2, stackH: 17, stackHalf: 2 })],
 ];
 
 for (const [name, geom] of parts) {

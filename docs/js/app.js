@@ -56,7 +56,7 @@ const GROUPS = {
   stack: ['Drawer 2 — one layer, stacked families', [
     ['stackW', 'tray width', 100, 336, 1, 'mm'],
     ['stackH', 'height', 10, 44, 1, 'mm'],
-    ['stackSet', 'drawer (1 = pliers, 2 = workbench)', 1, 2, 1, ''],
+    ['stackSet', 'tier (1 = bottom 27 mm, 2 = top 17 mm)', 1, 2, 1, ''],
     ['stackHalf', 'half (1 = left, 2 = right)', 1, 2, 1, ''],
   ]],
   rack: ['Tool rack', [
@@ -123,11 +123,11 @@ const PARTS = [
   },
   {
     id: 'stack',
-    label: 'Drawer tray — by family',
+    label: 'One drawer — two tiers',
     groups: ['stack', 'bodyNoH', 'print'],
     build: (p) => G.buildStack(p),
-    name: (p) => `drawer${Math.round(p.stackSet)}_${Math.round(p.stackHalf) === 1 ? 'left' : 'right'}`,
-    hint: 'One compartment per tool family, sized so a stack of that family fits. The packer lays them out; edit STACK_CELLS in geom.js to move a family.',
+    name: (p) => `one_drawer_${Math.round(p.stackSet) === 1 ? 'bottom' : 'top'}_${Math.round(p.stackHalf) === 1 ? 'left' : 'right'}`,
+    hint: 'Tier 1 is 27 mm (the tape measure with its clip sets it), tier 2 is 17 mm and lifts out in two halves. Cells are fixed coordinates from a verified packing - edit a size, then run node src/pack_search.mjs <tier> and paste the block back.',
   },
   {
     id: 'rack',
