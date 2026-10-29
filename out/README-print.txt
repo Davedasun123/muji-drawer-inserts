@@ -3,6 +3,11 @@ Muji 34 x 23 x 4.5 cm drawer - one drawer for all tools, two tiers.
 FILES
   one_drawer_bottom_left.stl   ) tier 1, 27 mm tall, 167.9 x 216
   one_drawer_bottom_right.stl  ) no floor - the tools sit on the drawer
+                             THIS RIGHT HALF IS 167.08 mm, not 167.92: it is cut
+                             to start at x = +0.92 so it butts against the left
+                             half printed from the earlier file. If you reprint
+                             the left half, tell me and I will resend both at the
+                             normal 0.15 mm seam.
   one_drawer_top_left.stl      ) tier 2, 17 mm tall, 167.9 x 182
   one_drawer_top_right.stl     ) 1.2 mm floor - it lifts out, so it carries its tools
 

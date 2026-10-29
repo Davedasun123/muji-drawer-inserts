@@ -39,7 +39,7 @@ export const DEFAULTS = {
   // measured tool rack: length, closed width, jaw width, jaw length (mm)
   rackPart: 1, rackH: 22, rackLip: 8,
   // challenge drawer: one compartment per tool family, sized to stack
-  stackW: 336, stackD: 224, stackH: 27, stackHalf: 1, stackSet: 1,
+  stackW: 336, stackD: 224, stackH: 27, stackHalf: 1, stackSet: 1, stackSeam: 0,
   // open tub - loose tools, at whatever width they spring to
   tubW: 289, tubD: 129, tubH: 18, tubWall: 1.8, tubFloor: 1.2, tubR: 4, tubNotch: 40,
   // parts grid
@@ -498,9 +498,12 @@ export function buildStack(P) {
   if (half >= 1) {
     // keep 0.075 mm off the centreline so the halves butt with a hair of
     // clearance instead of interfering; the outer edge runs way past the part
+    // stackSeam lets a half be generated to butt against an already-printed
+    // partner instead of against the centreline
+    const seam = P.stackSeam === undefined ? 0 : P.stackSeam;
     const c = 0.075;
-    const x0 = half === 1 ? -W / 2 - 2 : c;
-    const x1 = half === 1 ? -c : W / 2 + 2;
+    const x0 = half === 1 ? -W / 2 - 2 : seam + c;
+    const x1 = half === 1 ? seam - c : W / 2 + 2;
     const box = primitives.cuboid({ size: [x1 - x0, D + 20, H * 4],
       center: [(x0 + x1) / 2, 0, H * 2] });
     tray = booleans.intersect(tray, box);
