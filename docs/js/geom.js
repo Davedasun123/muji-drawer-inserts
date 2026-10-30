@@ -385,12 +385,12 @@ export function buildRack(P) {
  * drawer. Both tiers are pencilled from current numbers.
  */
 export const STACK_BOTTOM = [
-  { n: '2 cutters, stacked', x: 1.6, y: 1.6, w: 112, d: 117, note: 'needle-nose on flush cutter - 20 mm tall' },
-  { n: 'Crimper', x: 115.6, y: 1.6, w: 194, d: 59, note: 'measured: 190 long, 55 wide, 13 thick' },
+  { n: 'Crimper', x: 1.6, y: 1.6, w: 194, d: 59, note: 'measured: 190 long, 55 wide, 13 thick' },
+  { n: '3rd cutter', x: 197.6, y: 1.6, w: 112, d: 117, note: 'side cutter, full extension' },
+  { n: '2 cutters, stacked', x: 1.6, y: 62.6, w: 112, d: 117, note: 'needle-nose on flush cutter - 20 mm tall' },
   { n: 'Tape measure', x: 115.6, y: 62.6, w: 74, d: 69, note: 'measured: 26 incl. the clip - sets this tier at 27' },
-  { n: 'Swiss army knife', x: 191.6, y: 62.6, w: 101, d: 33, note: 'measured: 95 x 27 x 19' },
-  { n: '3rd cutter', x: 191.6, y: 97.6, w: 112, d: 117, note: 'side cutter, full extension' },
-  { n: 'Screwdrivers', x: 1.6, y: 133.6, w: 145, d: 62, note: 'yellow 140x19 + black 115x17, side by side - 19 mm is why this tier' },
+  { n: 'Screwdrivers', x: 115.6, y: 133.6, w: 145, d: 62, note: 'yellow 140x19 + black 115x17, side by side - 19 mm is why this tier' },
+  { n: 'Swiss army knife', x: 1.6, y: 181.6, w: 101, d: 33, note: 'measured: 95 x 27 x 19' },
 ];
 
 export const STACK_TOP = [
@@ -489,17 +489,20 @@ export function buildStack(P) {
   // the two arcs pinch at 45 deg: with a frame radius of 5 and a pocket radius
   // of 3 the wall thins from 1.6 to about 1.0, which a slicer will drop.
   const rFrame = Math.min(rOut(P), 6);
+  // the printed bottom halves used a smaller pocket radius; keep the switch so
+  // a reprint matches the part already in the drawer
+  const rCell = P.stackRadius > 0 ? P.stackRadius : rFrame;
   let s = slab(W, D, H, rFrame);
   const cuts = [];
   const z0 = P.FLOOR > 0 ? P.FLOOR : -1;
   for (const c of placed) {
     cuts.push(pocket(c.w, c.d, -W / 2 + c.x + c.w / 2, -D / 2 + c.y + c.d / 2,
-      z0, H + 1, rFrame));
+      z0, H + 1, rCell));
   }
   // anything the packer could not fill is storage, not a solid block
   for (const r of freeRects(placed, W, D, P.WALL, P.stackBite || 0)) {
     cuts.push(pocket(r.w, r.d, -W / 2 + r.x + r.w / 2, -D / 2 + r.y + r.d / 2,
-      z0, H + 1, rFrame));
+      z0, H + 1, rCell));
   }
   let tray = booleans.subtract(s, ...cuts);
 
